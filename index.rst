@@ -1,13 +1,8 @@
 Welcome to Unique Network
 =========================
 
-Heading 2
------------------
+Unique Network is the new home for NFT projects.
 
-
-
-Heading 2
------------------
 
 Contents
 --------
@@ -16,6 +11,5 @@ Contents
    :maxdepth: 2
    :glob:
   
-   index
    overview
    jsapi
