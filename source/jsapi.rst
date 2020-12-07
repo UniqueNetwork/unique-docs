@@ -3,7 +3,7 @@ JavaScript API
 
 Polkadot JS API
 ---------------
-The .. _Polkadot JS API: https://polkadot.js.org/docs/api/ is a constantly developed API for integration with Substrate based blockchains, which is maintained by Parity Inc.
+The `Polkadot JS API: https://polkadot.js.org/docs/api/`_ is a constantly developed API for integration with Substrate based blockchains, which is maintained by Parity Inc.
 
 This documentation does not focus on general features of this API, but mainly on using this API for integration with features of Unique Blockchain.
 
