@@ -104,6 +104,7 @@ html_theme_options = {
    'collapse_navigation': False,
     'logo_only': True,
     'display_version': False,
+    'style_nav_header_background': 'white'
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
