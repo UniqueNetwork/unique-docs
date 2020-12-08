@@ -61,9 +61,11 @@ Creating Collection
 This method creates a Collection of NFTs. Each Token may have multiple properties encoded as an array of bytes of certain length. The initial owner and admin of the collection are set to the address that signed the transaction. Both addresses can be changed later.
 
 **Permissions**
-- Anyone
+
+* Anyone
 
 **Parameters**
+
 * collectionName: UTF-16 string with collection name (limit 64 characters), will be stored as zero-terminated 
 * collectionDescription: UTF-16 string with collection description (limit 256 characters), will be stored as zero-terminated 
 * tokenPrefix: UTF-8 string with token prefix, limit 16 characters, will be stored as zero-terminated
@@ -75,6 +77,7 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 * decimalPoints: Decimal points to be used in token amounts. If set to 0, the tokens are indivisible.
 
 **Events**
+
 * CollectionCreated
     * CollectionID: Globally unique identifier of newly created collection.
     * Owner: Collection owner
