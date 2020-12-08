@@ -53,7 +53,7 @@ Once you've got all parameters, connect to the node like this::
     });
 
 
-Creating Collection
+createCollection
 -------------------
 
 **Description**
@@ -80,6 +80,7 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 **Events**
 
 * CollectionCreated
+
     * CollectionID: Globally unique identifier of newly created collection.
     * Owner: Collection owner
 
@@ -89,7 +90,7 @@ Here is some code::
 
     await api.tx.nft.createCollection();
 
-Change Collection Owner
+changeCollectionOwner
 -----------------------
 
 **Description**
@@ -104,6 +105,22 @@ Change the owner of the collection
 
 * CollectionId - ID of the collection to change owner for
 * NewOwner - new collection owner
+
+
+destroyCollection
+-----------------
+
+**Description**
+
+DANGEROUS: Destroys collection and all NFTs within this collection. Users irrecoverably lose their assets and may lose real money.
+
+**Permissions**
+
+* Collection Owner
+
+**Parameters**
+
+* CollectionId - ID of the collection to destroy
 
 
 Minting Tokens
