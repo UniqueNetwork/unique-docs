@@ -125,7 +125,47 @@ DANGEROUS: Destroys collection and all NFTs within this collection. Users irreco
 * CollectionId - ID of the collection to destroy
 
 
-Minting Tokens
---------------
+createItem (Mint)
+^^^^^^^^^^^^^^^^^
 
-alsdkjflafd
+createMultipleItems
+^^^^^^^^^^^^^^^^^^^
+
+burnItem
+^^^^^^^^
+
+Item Ownership and Transfers
+----------------------------
+
+This group of methods allows managing NFT ownership.
+
+Getting NFT Owner
+^^^^^^^^^^^^^^^^^
+
+Getting BalanceOf
+^^^^^^^^^^^^^^^^^
+
+transfer
+^^^^^^^^
+
+transferFrom
+^^^^^^^^^^^^
+
+approve
+^^^^^^^
+
+Data Schema
+-----------
+
+setSchemaVersion
+^^^^^^^^^^^^^^^^
+
+setOffchainSchema
+^^^^^^^^^^^^^^^^^
+
+setConstOnChainSchema
+^^^^^^^^^^^^^^^^^^^^^
+
+setVariableOnChainSchema
+^^^^^^^^^^^^^^^^^^^^^^^^
+
