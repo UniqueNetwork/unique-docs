@@ -3,7 +3,7 @@ JavaScript API
 
 Polkadot JS API
 ---------------
-The `Polkadot JS API: https://polkadot.js.org/docs/api/`_ is a constantly developed API for integration with Substrate based blockchains, which is maintained by Parity Inc.
+The `Polkadot JS API: <https://polkadot.js.org/docs/api/>`_ is a constantly developed API for integration with Substrate based blockchains, which is maintained by Parity Inc.
 
 This documentation does not focus on general features of this API, but mainly on using this API for integration with features of Unique Blockchain.
 
@@ -16,7 +16,7 @@ The Polkadot JS API is available as an npm package and can be included in `packa
 Examples
 --------
 
-The examples are provided for this documentation in the `Examples folder: https://github.com/usetech-llc/unique-docs/tree/master/examples/`_. In order to execute them, install NodeJS 15, clone this repository and run an example (e.g. connect.js)::
+The examples are provided for this documentation in the `examples folder: <https://github.com/usetech-llc/unique-docs/tree/master/examples/>`_. In order to execute them, install NodeJS 15, clone this repository and run an example (e.g. connect.js)::
 
     cd examples
     npm install
