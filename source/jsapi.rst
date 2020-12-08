@@ -52,9 +52,11 @@ Once you've got all parameters, connect to the node like this::
         types: rtt
     });
 
+Collection Management
+---------------------
 
 createCollection
--------------------
+^^^^^^^^^^^^^^^^
 
 **Description**
 
@@ -91,7 +93,7 @@ Here is some code::
     await api.tx.nft.createCollection();
 
 changeCollectionOwner
------------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 **Description**
 
@@ -108,7 +110,7 @@ Change the owner of the collection
 
 
 destroyCollection
------------------
+^^^^^^^^^^^^^^^^^
 
 **Description**
 
