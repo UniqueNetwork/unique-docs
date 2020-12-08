@@ -16,7 +16,7 @@ The Polkadot JS API is available as an npm package and can be included in `packa
 Examples
 --------
 
-The examples are provided for this documentation in the `examples: https://github.com/usetech-llc/unique-docs/tree/master/examples`_ folder. In order to execute them, install NodeJS 15, clone this repository and run an example (e.g. connect.js)::
+The examples are provided for this documentation in the `Examples folder: https://github.com/usetech-llc/unique-docs/tree/master/examples/`_. In order to execute them, install NodeJS 15, clone this repository and run an example (e.g. connect.js)::
 
     cd examples
     npm install
