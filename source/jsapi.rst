@@ -69,7 +69,8 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 * collectionName: UTF-16 string with collection name (limit 64 characters), will be stored as zero-terminated 
 * collectionDescription: UTF-16 string with collection description (limit 256 characters), will be stored as zero-terminated 
 * tokenPrefix: UTF-8 string with token prefix, limit 16 characters, will be stored as zero-terminated
-* collectionType
+* collectionType:
+
     * 0 - Invalid (collection does not exist, if type is 0)
     * 1 - NFT. All items in ItemList are unique and indivisible (decimalPoints parameter must be 0). Item IDs are unique, and one item may only be owned by one address.
     * 2 - Fungible. Collection does not have custom data associated with token (custom data size parameter must be 0). All Item IDs are the same and all that is recorded in ItemList in value field is the owner address and owned amount. The value is fixed point decimal with decimalPoints set as in the parameter to this method.
