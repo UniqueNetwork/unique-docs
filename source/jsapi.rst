@@ -13,6 +13,15 @@ The Polkadot JS API is available as an npm package and can be included in `packa
 
     "@polkadot/api": "2.9.1",
 
+Examples
+--------
+
+The examples are provided for this documentation in examples folder. In order to execute them, install NodeJS 15, clone this repository and run an example (e.g. connect.js)::
+
+    cd examples
+    npm install
+    node connect.js 
+
 Opening Connection
 ------------------
 
@@ -33,10 +42,9 @@ The public node URL depends on the network that you would like to connect to:
 Once you've got all parameters, connect to the node like this::
 
     const { ApiPromise, WsProvider, Keyring } = require('@polkadot/api');
-    const fs = require('fs');
+    const rtt = require("./runtime_types.json");
 
     const wsProvider = new WsProvider(public_node_url);
-    const rtt = JSON.parse(fs.readFileSync("runtime_types.json"));
 
     // Create the API and wait until ready
     const api = await ApiPromise.create({ 
