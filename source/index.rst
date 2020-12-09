@@ -11,8 +11,8 @@ Contents
    :maxdepth: 2
    :glob:
   
-   gettingstarted
    overview
+   gettingstarted
    jsapi
    unityapi
    dotnetapi
