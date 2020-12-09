@@ -128,8 +128,62 @@ DANGEROUS: Destroys collection and all NFTs within this collection. Users irreco
 createItem (Mint)
 ^^^^^^^^^^^^^^^^^
 
+**Description**
+
+This method creates a concrete instance of NFT Collection created with createCollection method.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+* Anyone, if 
+
+    * White List is enabled, and
+    * Address is added to white list, and
+    * MintPermission is enabled (see setMintPermission method)
+
+**Parameters**
+
+* CollectionID: ID of the collection
+* Properties: Array of bytes that contains NFT properties. Since NFT Module is agnostic of properties’ meaning, it is treated purely as an array of bytes
+* Owner: Address, initial owner of the NFT
+
+**Events**
+
+* ItemCreated
+    * ItemId: Identifier of newly created NFT, which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
+
+
 createMultipleItems
 ^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+This method creates multiple instances of NFT Collection created with createCollection method.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+* Anyone, if 
+
+    * White List is enabled, and
+    * Address is added to white list, and
+    * MintPermission is enabled (see setMintPermission method)
+
+**Parameters**
+
+* CollectionID: ID of the collection
+* Properties: Array of properties with one element for each created NFT. One element of this array is an array of bytes that contains NFT properties. Since NFT Module is agnostic of properties’ meaning, it is treated purely as an array of bytes.
+* Owner: Address, initial owner of all NFTs created in this transaction
+
+**Events**
+
+One `ItemCreated` event is emitted for each created NFT 
+
+* ItemCreated
+    * ItemId: Identifier of newly created NFT, which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
+
 
 burnItem
 ^^^^^^^^
