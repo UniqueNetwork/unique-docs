@@ -389,7 +389,7 @@ The API will return the JSON structure in the following format that contains ::
 
 
 
-Item Ownership and Transfers
+Token Ownership and Transfers
 ----------------------------
 
 This group of methods allows managing NFT ownership.
@@ -422,6 +422,7 @@ Transfer Checks
 This algorithm is used to check if the address can transfer, approve, transferFrom, and burn a token:
 
 #. Check ownership and/or approvals (If not -> Error. If yes -> go next.)
+
     #. Transfer, Approve, and Burn: Check if the sender owns the token, or 
     #. TransferFrom: Check if the sender is approved to transfer this token. Collection Owner, Admins, and this token owner are always approved.
 #. Check if the sender is the collection owner or an admin. If yes -> Allow transaction, no extra checks needed. If no -> go next.
@@ -432,13 +433,164 @@ This algorithm is used to check if the address can transfer, approve, transferFr
 transfer
 ^^^^^^^^
 
+**Description**
+
+Change ownership of the token.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+* Current NFT owner
+
+**Parameters**
+
+* Recipient: Address of token recipient
+* CollectionId: ID of collection
+* ItemId: ID of the item
+
+    * Non-Fungible Mode: Required
+    * Fungible Mode: Ignored
+    * Re-Fungible Mode: Required
+* Value (Optional): Amount to transfer
+
+    * Non-Fungible Mode: Ignored
+    * Fungible Mode: Must specify transferred amount
+    * Re-Fungible Mode: Must specify transferred portion (between 0 and 1)
+
+
+transferWithData (not yet available)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Same as Transfer with extra parameter: Data, an array of bytes. Data will be emitted in an event.
+
+**Permissions**
+
+Same as transfer
+
+**Parameters**
+
+* Recipient: Address of token recipient
+* CollectionId: ID of collection
+* ItemId: ID of the item
+* Data: Data to be included in the transaction
 
 
 transferFrom
 ^^^^^^^^^^^^
 
+**Description**
+
+Change ownership of a NFT on behalf of the owner. See Approve method for additional information. After this method executes, the approval is removed so that the approved address will not be able to transfer this NFT again from this owner.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+* Current NFT owner
+* Address approved by current NFT owner
+
+**Parameters**
+
+* Sender: Address that owns token
+* Recipient: Address of token recipient
+* CollectionId: ID of collection
+* ItemId: ID of the item
+
+transferFromWithData
+^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Same as TransferFrom with extra parameter: Data, an array of bytes. Data will be emitted in an event.
+
+**Permissions**
+
+Same as TransferFrom
+
+**Parameters**
+
+* Sender: Address that owns token
+* Recipient: Address of token recipient
+* CollectionId: ID of collection
+* ItemId: ID of the item
+* Data: Data to be included in the transaction
+
 approve
 ^^^^^^^
+
+**Description**
+
+Set, change, or remove approved address to transfer the ownership of the NFT.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+* Current NFT owner
+
+**Parameters**
+
+* Approved: Address that is approved to transfer this NFT or zero (if needed to remove approval)
+* CollectionId: ID of collection
+* ItemId: ID of the item
+
+setApprovalForAll (not yet available)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Sets or unsets the approval of a given address (operator). An operator is allowed to transfer all tokens of the sender on their behalf. Unlike single approvals, approvals granted using this method don’t reset after transfers.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+* Current NFT owner
+
+**Parameters** 
+
+* CollectionId: ID of the collection
+* Approved: True or False
+
+
+Getting Approvals
+^^^^^^^^^^^^^^^^^
+
+The current approvals may be read with `api.query.nft.approvedList`. It returns the list of addresses, approved for the given token.
+
+**Parameters**
+
+* CollectionId: ID of collection
+* ItemId: ID of the item
+
+batchTransfer
+^^^^^^^^^^^^^
+
+This is an ERC-1155 compatibility method. Not implemented yet
+
+batchApproval
+^^^^^^^^^^^^^
+
+This is an ERC-1155 compatibility method. Not implemented yet
+
+batchTransferFrom
+^^^^^^^^^^^^^^^^^
+
+This is an ERC-1155 compatibility method. Not implemented yet
+
+safeBatchTransfer
+^^^^^^^^^^^^^^^^^
+
+This is an ERC-1155 compatibility method. Not implemented yet
+
+safeBatchTransferFrom
+^^^^^^^^^^^^^^^^^^^^^
+
+This is an ERC-1155 compatibility method. Not implemented yet
+
 
 Data Schema
 -----------
@@ -446,12 +598,125 @@ Data Schema
 setSchemaVersion
 ^^^^^^^^^^^^^^^^
 
+**Description**
+
+Set schema standard to one of:
+
+* ERC-721 (Image URL only, just like in TestNet 1.0)
+* SimpleKV (Simple key-value JSON format)
+* OpenSea
+* Tezos TZIP-16 (https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-16/tzip-16.md)
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+
+**Parameters**
+
+* CollectionID: ID of collection
+* SchemaVersion: enum
+
 setOffchainSchema
 ^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Set off-chain data schema. In the initial version of NFT parachain the schema will only reflect image URL. The {id} substring will be parsed to reflect the NFT id.
+
+For example, the schema string for CryptoKitties will look like this::
+
+    https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/{id}.png
+
+Next version of the token data schema is split into three methods: SetOffchainSchema, SetConstOnChainSchema, and SetVariableOnChainSchema, as well as a chain variable: SchemaVersion, which will return the value corresponding to the metadata standard being used. If SchemaVersion is not present in the chain, it means this is still the TestNet 1.0 and there is no on-chain schema yet implemented in it.
+
+The schema must contain the image and page fields, which should use `{id}` placeholder that will be replaced by wallets with the actual token ID in order to get the token page and image URLs. Also, there is an optional “audio” field that contains audio file URL associated with the tokens. The schema will be parsed by 3rd party wallets, but not at the moment of setting the schema.
+
+Example::
+
+    {
+      “image”: “https://example.com/images/{id}”,
+      “page”: “https://example.com/nft/{id}”,
+      “audio”: “https://example.com/audio/{id}”
+    }
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+
+**Parameters**
+
+* CollectionID: ID of collection
+* Schema: String representing the offchain data schema
+
+
 
 setConstOnChainSchema
 ^^^^^^^^^^^^^^^^^^^^^
 
+**Description**
+
+Set the on-chain schema (string in JSON-schema format) that describes permanent token fields.
+
+The schema must describe the non-changeable token fields. For each field it must include “size” in bytes and “name”. It will be parsed by 3rd party wallets. At the moment of setting the schema it will only be checked to match constant custom data size. 
+
+Example::
+
+    {
+      “field 1” : 10,
+      “field 2” : 2,
+    }
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+
+**Parameters**
+
+* CollectionID: ID of collection
+* Schema: String representing the offchain data schema
+
 setVariableOnChainSchema
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Same as Const on-chain schema, except sets the variable schema. Also, requires name and size of each field and is required to match the total variable data size.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+
+**Parameters**
+
+* CollectionID: ID of collection
+* Schema: String representing the offchain data schema
+
+
+
+
+
+Ecomonic Models
+---------------
+
+setCollectionSponsor
+^^^^^^^^^^^^^^^^^^^^
+
+confirmSponsorship
+^^^^^^^^^^^^^^^^^^
+
+removeCollectionSponsor
+^^^^^^^^^^^^^^^^^^^^^^^
+
+enableContractSponsoring
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+setContractSponsoringRateLimit
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sponsor Security
+^^^^^^^^^^^^^^^^
 
