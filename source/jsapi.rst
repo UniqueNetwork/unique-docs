@@ -409,6 +409,20 @@ In order to get the list of NFT or Re-fungible tokens that are owned by a single
 * CollectionID: Id of collection 
 * AccountId: user address
 
+Transfer Checks
+^^^^^^^^^^^^^^^
+
+This algorithm is used to check if the address can transfer, approve, transferFrom, and burn a token:
+
+#. Check ownership and/or approvals
+    #. Transfer, Approve, and Burn: Check if the sender owns the token, or 
+    #. TransferFrom: Check if the sender is approved to transfer this token. Collection Owner, Admins, and this token owner are always approved.
+If not -> Error. If yes -> go next.
+#. Check if the sender is the collection owner or an admin. If yes -> Allow transaction, no extra checks needed. If no -> go next.
+#. Check if White List mode is enabled. If no -> Allow transaction, no extra checks needed. If yes -> go next.
+#. Check if the sender is in the white list. If yes -> Allow transaction, no extra checks needed. If no -> Error.
+
+
 transfer
 ^^^^^^^^
 
