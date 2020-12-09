@@ -151,6 +151,7 @@ This method creates a concrete instance of NFT Collection created with createCol
 **Events**
 
 * ItemCreated
+    * CollectionID: ID of collection
     * ItemId: Identifier of newly created NFT, which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
 
 
@@ -182,25 +183,236 @@ This method creates multiple instances of NFT Collection created with createColl
 One `ItemCreated` event is emitted for each created NFT 
 
 * ItemCreated
+    * CollectionID: ID of collection
     * ItemId: Identifier of newly created NFT, which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
 
 
 burnItem
 ^^^^^^^^
 
+**Description**
+
+This method destroys a concrete instance of NFT.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+* Current NFT Owner
+
+**Parameters**
+
+* CollectionID: ID of the collection
+* ItemID: ID of NFT to burn
+
+**Events**
+
+* ItemDestroyed
+    * CollectionID: ID of collection
+    * ItemId: Identifier of burned NFT
+
+setMetaData
+^^^^^^^^^^^
+
+**Description**
+
+Update token custom data (the changeable part).
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+* Current NFT Owner
+
+**Parameters**
+
+* CollectionID: ID of the collection
+* ItemID: ID of NFT to burn
+
+
+addCollectionAdmin
+^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+NFT Collection can be controlled by multiple admin addresses (some which can also be servers, for example). Admins can issue and burn NFTs, as well as add and remove other admins, but cannot change NFT or Collection ownership.
+
+This method adds an admin of the Collection.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+
+**Parameters**
+
+* CollectionID: ID of the Collection to add admin for
+* Admin: Address of new admin to add
+
+removeCollectionAdmin
+^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Remove admin address of the Collection. An admin address can remove itself. List of admins may become empty, in which case only Collection Owner will be able to add an Admin.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+
+**Parameters**
+
+* CollectionID: ID of the Collection to remove admin for
+* Admin: Address of admin to remove
+
+setPublicAccessMode
+^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Toggle between normal and white list access for the methods with access for “Anyone”.
+
+**Permissions**
+
+Collection Owner
+
+**Parameters**
+
+* CollectionID: ID of the Collection to remove admin for
+* Mode
+    * 0 = Normal
+    * 1 = White list
+
+addToWhiteList
+^^^^^^^^^^^^^^
+
+**Description**
+
+Add an address to white list.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+
+**Parameters**
+* CollectionID: ID of the Collection
+* Address
+
+removeFromWhiteList
+^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Remove an address from white list.
+
+**Permissions**
+
+* Collection Owner
+* Collection Admin
+
+**Parameters**
+
+* CollectionID: ID of the Collection
+* Address
+
+setMintPermission
+^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Allows Anyone to create tokens if:
+
+    * White List is enabled, and
+    * Address is added to white list, and
+    * This method was called with True parameter
+
+**Permissions**
+
+* Collection Owner
+
+**Parameters**
+
+* CollectionID: ID of the Collection to add admin for
+* MintPermission: Boolean parameter. If True, allows minting to Anyone with conditions above.
+
+setCollectionLimits
+^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Sets some collection limits and starts enforcing them immediately:
+
+    * `account_token_ownership_limit` - Maximum number of tokens that one address can own. Default value is 0 (not limited), maximum value is 10,000,000.
+    * `nft_sponsor_transfer_timeout` - Time interval in blocks that defines once per how long a transfer transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
+    * `fungible_sponsor_transfer_timeout` - same for fungible transfers
+    * `refungible_sponsor_transfer_timeout` - same for refungible transfers
+    * `token_limit`  - total amount of tokens that can be minted in this collection. It can only be set if the current value is not 0. Default value is 0 (unlimited). If the value is not set (equals to default), the number of tokens is not limited until this limit is set. When the limit is set, the NFT pallet will check if the number of minted tokens is less or equal than the parameter value. If the number of minted tokens is greater than this number, the transaction will fail.
+    * `sponsored_mint_size` - maximum byte size of custom NFT data that can be sponsored when tokens are minted in sponsored mode. If the amount of custom data is greater than this parameter when tokens are minted, then the transaction sender will pay transaction fees when minting tokens.
+
+**Permissions**
+
+* Collection Owner
+
+**Parameters**
+
+* CollectionLimits structure (see the description of parameters above)
+
+
+
+
 Item Ownership and Transfers
 ----------------------------
 
 This group of methods allows managing NFT ownership.
 
-Getting NFT Owner
-^^^^^^^^^^^^^^^^^
+Getting Token Information
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to get the NFT or Re-fungible token information, one should use
+
+* `api.query.nft.nftItemList` query for Non-Fungible items
+* `api.query.nft.reFungibleItemList` query for Re-Fungible items
+
+**Parameters**
+
+* CollectionID: Id of collection 
+* ItemID: token Id
+
+The API will return the JSON structure in the following format that contains ::
+
+    {
+      Collection: 4,
+      Owner: 5FZeTmbZQZsJcyEevjGVK1HHkcKfWBYxWpbgEffQ2M1SqAnP,
+      Data: 0x0001000311ffffffffffffffffffffffffffffff
+    }
 
 Getting BalanceOf
 ^^^^^^^^^^^^^^^^^
 
+In order to get the NFT or Re-fungible balance for an address, one should use `api.query.nft.balance`
+
+**Parameters**
+
+* CollectionID: Id of collection 
+* AccountId: user address
+
+
+Getting Address Tokens
+^^^^^^^^^^^^^^^^^^^^^^
+
+In order to get the list of NFT or Re-fungible tokens that are owned by a single address, one should use `api.query.nft.addressTokens`
+
+**Parameters**
+
+* CollectionID: Id of collection 
+* AccountId: user address
+
 transfer
 ^^^^^^^^
+
+
 
 transferFrom
 ^^^^^^^^^^^^
