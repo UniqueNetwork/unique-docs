@@ -15,14 +15,17 @@ One way to create an address for yourself is to use `Polkadot{.js} browser exten
 Once it is installed, open the Polkadot{.js} extension and create the address. The extension will display the mnemonic seed. Make sure you save it securely because this is the only way to restore your address. This mnemonic seed can also be used to sign transactions in JavaScript code. In the examples we use the mnemonic seed for Alice account (seed: "//Alice"), but you can replace it with your seed to work with TestNet or MainNet.
 
 .. image:: _static/address01.png
+  :width: 500
 
 In the next step enter the name and password for the account. The password will be needed every time when you sign a transaction:
 
 .. image:: _static/address02.png
+  :width: 500
 
 The new address will appear in the list:
 
 .. image:: _static/address03.png
+  :width: 500
 
 Finally, you can open the `UniqueApps UI <https://uniqueapps.usetech.com/#/accounts>`_ to see your address.
 
