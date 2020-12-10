@@ -90,6 +90,8 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 
 **Code example**:
 
+::
+
     await api.tx.nft.createCollection();
 
 changeCollectionOwner
@@ -732,7 +734,9 @@ In order to get a data schema for the collection, one should use following query
 
 * CollectionID: Id of collection 
 
-**Code Example**:
+**Code Example**
+
+::
 
     await api.query.nft.collection(collectionId);
 
