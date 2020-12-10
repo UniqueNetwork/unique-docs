@@ -88,7 +88,7 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 
 
 
-Here is some code::
+**Code example**
 
     await api.tx.nft.createCollection();
 
