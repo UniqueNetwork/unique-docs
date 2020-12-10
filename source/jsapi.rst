@@ -88,7 +88,7 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 
 
 
-**Code example**
+**Code example**:
 
     await api.tx.nft.createCollection();
 
@@ -124,7 +124,7 @@ DANGEROUS: Destroys collection and all NFTs within this collection. Users irreco
 
 * CollectionId - ID of the collection to destroy
 
-setMetaData
+setVariableMetaData
 ^^^^^^^^^^^
 
 **Description**
@@ -464,6 +464,8 @@ transferWithData (not yet available)
 
 **Description**
 
+This ERC-721 compatibility method is not yet implemented. 
+
 Same as Transfer with extra parameter: Data, an array of bytes. Data will be emitted in an event.
 
 **Permissions**
@@ -499,10 +501,12 @@ Change ownership of a NFT on behalf of the owner. See Approve method for additio
 * CollectionId: ID of collection
 * ItemId: ID of the item
 
-transferFromWithData
-^^^^^^^^^^^^^^^^^^^^
+transferFromWithData (not yet available)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description**
+
+This ERC-721 compatibility method is not yet implemented. 
 
 Same as TransferFrom with extra parameter: Data, an array of bytes. Data will be emitted in an event.
 
@@ -541,6 +545,8 @@ setApprovalForAll (not yet available)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description**
+
+This ERC-721 compatibility method is not yet implemented. 
 
 Sets or unsets the approval of a given address (operator). An operator is allowed to transfer all tokens of the sender on their behalf. Unlike single approvals, approvals granted using this method don’t reset after transfers.
 
@@ -695,9 +701,40 @@ Same as Const on-chain schema, except sets the variable schema. Also, requires n
 * CollectionID: ID of collection
 * Schema: String representing the offchain data schema
 
+Getting Data Schemas
+^^^^^^^^^^^^^^^^^^^^
 
+In order to get a data schema for the collection, one should use following query: `api.query.nft.collection`. The response to the query is the JSON object that contains schemas information in fields `OffchainSchema`, `VariableOnChainSchema`, and `ConstOnChainSchema`:
 
+    {
+      Owner: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY,
+      Mode: {
+        NFT: null
+      },
+      Access: Normal,
+      DecimalPoints: 0,
+      Name: [
+        0
+      ],
+      Description: [
+        0
+      ],
+      TokenPrefix: 0x3000,
+      MintMode: false,
+      OffchainSchema: "",
+      Sponsor: 5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM,
+      UnconfirmedSponsor: 5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM,
+      VariableOnChainSchema: "",
+      ConstOnChainSchema: ""
+    }
 
+**Parameters**
+
+* CollectionID: Id of collection 
+
+**Code Example**:
+
+    await api.query.nft.collection(collectionId);
 
 Ecomonic Models
 ---------------
