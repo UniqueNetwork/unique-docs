@@ -743,21 +743,153 @@ In order to get a data schema for the collection, one should use following query
 Ecomonic Models
 ---------------
 
+The Unique Network allows sponsoring user transactions for NFT collections and smart contracts. When collection (or smart contract) is sponsored, all their users need is to have the Unique wallet and address, but they don't need to have any Unique balance on the wallet. This feature removes the extra friction for the end user and creates nice flawless user expeirence.
+
 setCollectionSponsor
 ^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Setting collection sponsor is the 2-step process. This method is the step 1: Set the sponsor address. The sponsor will need to confirm the sponsorship using `confirmSponsorship` method before the sponsoring begins.
+
+**Permissions**
+
+* Collection Owner
+
+**Parameters**
+
+* CollectionID: ID of collection
+* Sponsor: Sponsor address
+
 
 confirmSponsorship
 ^^^^^^^^^^^^^^^^^^
 
+**Description**
+
+Setting collection sponsor is the 2-step process. This method is the step 2: Confirm sponsorship. The sponsor needs to confirm the sponsorship so that the collection owners cannot atack the addresses they are not related with.
+
+**Permissions**
+
+* Collection Sponsor
+
+**Parameters**
+
+* CollectionID: ID of collection
+
+
 removeCollectionSponsor
 ^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Disable sponsoring and switch back to pay-per-own-transaction model.
+
+**Permissions**
+
+* Collection owner
+
+**Parameters**
+
+* CollectionID: ID of collection
 
 enableContractSponsoring
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+**Description**
+
+Enable the smart contract to pay for its own transaction using its endowment. Can only be called by the contract owner, i.e. address that deployed this smart contract.
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the contract to sponsor
+* enable: Boolean flag to enable or disable smart contact self-sponsoring
+
+
 setContractSponsoringRateLimit
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+**Description**
+
+Set the rate limit for contract sponsoring. If not set (has the default value of 0 blocks), the sponsoring will be disabled. If set to the number B (for blocks), the transactions will be sponsored with a rate limit of B, i.e. fees for every transaction sent to this smart contract will be paid from contract endowment if there are at least B blocks between such transactions. Nonetheless, if transactions are sent more frequently, the fees are paid by the sender.
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the contract to sponsor
+* rate_limit: Number of blocks to wait until the next sponsored transaction is allowed
+
+
 Sponsor Security
 ^^^^^^^^^^^^^^^^
+
+Sponsoring smart contracts is tricky. Users can generate addresses very quickly because creating an address is as simple as generating a random 64-byte sequence. So, it is really hard to prevent someone from making very many smart contract calls if they are sponsored. But the sponsor funds need to be protected.
+
+One way to protect funds is to introduce severe rate limits globally, i.e. for all users of the smart contract, but it also degrades the user experience, especially if there are malicious players who race for free contract calls.
+
+The `setContractSponsoringRateLimit` only limits the call rate for each address, so it is designed to be used with White Lists, enabled by `toggleContractWhiteList`_, when the number of addresses is limited.
+
+So the quick recipe for secure smart contract sponsoring is::
+
+    RATE LIMIT + WHITE LIST
+
+The contract owner (address that deployed it) can add user addresses to the white lists using `addToContractWhiteList`_ method. For a dApp this can be combined with user registration, when the account is confirmed (or captcha or KYC is passed, for example).
+
+
+toggleContractWhiteList
+^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Enable the white list for a contract. Only addresses added to the white list with `addToContractWhiteList`_ will be able to call this smart contract.
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the contract
+
+
+addToContractWhiteList
+^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Add an address to smart contract white list.
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the contract
+* Address to add
+
+
+removeFromContractWhiteList
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Remove an address from smart contract white list.
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the contract
+* Address to remove
+
 
