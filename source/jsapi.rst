@@ -798,7 +798,7 @@ enableContractSponsoring
 
 **Description**
 
-Enable the smart contract to pay for its own transaction using its endowment. Can only be called by the contract owner, i.e. address that deployed this smart contract.
+Enable the smart contract to pay for its own transaction using its endowment. Can only be called by the contract owner, i.e. address that deployed this smart contract. The sponsoring will only start working after the rate limit is set with `setContractSponsoringRateLimit`_.
 
 **Permissions**
 
