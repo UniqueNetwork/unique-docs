@@ -260,9 +260,9 @@ setCollectionLimits
 Sets some collection limits and starts enforcing them immediately. By default the collection limits are not set, so for example, the number of items that an addres can own is not limited. When the limits are set, the current number of owned items will not be checked, but if it already exceeds the limit, no more tokens will be transferred or minted to this address.
 
     * `account_token_ownership_limit` - Maximum number of tokens that one address can own. Default value is 0 (not limited), maximum value is 10,000,000.
-    * `nft_sponsor_transfer_timeout` - Time interval in blocks that defines once per how long a transfer transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
-    * `fungible_sponsor_transfer_timeout` - same for fungible transfers
-    * `refungible_sponsor_transfer_timeout` - same for refungible transfers
+    * `nft_sponsor_timeout` - Time interval in blocks that defines once per how long a transfer transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
+    * `fungible_sponsor_timeout` - same for fungible transfers
+    * `refungible_sponsor_timeout` - same for refungible transfers
     * `token_limit`  - total amount of tokens that can be minted in this collection. It can only be set if the current value is not 0. Default value is 0 (unlimited). If the value is not set (equals to default), the number of tokens is not limited until this limit is set. When the limit is set, the NFT pallet will check if the number of minted tokens is less or equal than the parameter value. If the number of minted tokens is greater than this number, the transaction will fail.
     * `sponsored_mint_size` - maximum byte size of custom NFT data that can be sponsored when tokens are minted in sponsored mode. If the amount of custom data is greater than this parameter when tokens are minted, then the transaction sender will pay transaction fees when minting tokens.
 
@@ -892,4 +892,32 @@ Remove an address from smart contract white list.
 * contractAddress: Address of the contract
 * Address to remove
 
+
+Governance-only Methods
+-----------------------
+
+The methods in this group can only be called by the root of the chain. They are not available for public use and are only listed for reference.
+
+setChainLimits
+^^^^^^^^^^^^^^
+
+**Description**
+
+Sets some chain limits and starts enforcing them immediately. 
+
+    * `collection_numbers_limit`: Total number of collections
+    * `account_token_ownership_limit`: Total number of tokens that a single address can own
+    * `collections_admins_limit`: Total number of collection admins
+    * `custom_data_limit`: The maximum byte-size of token metadata
+    * `nft_sponsor_timeout`: The number of blocks between sponsored transfers for NFT tokens
+    * `fungible_sponsor_timeout`: The number of blocks between sponsored transfers for Fungible tokens
+    * `refungible_sponsor_timeout`: The number of blocks between sponsored transfers for Refungible tokens
+
+**Permissions**
+
+* Network Root
+
+**Parameters**
+
+* ChainLimits structure (see the description of parameters above)
 
