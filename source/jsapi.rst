@@ -610,10 +610,48 @@ setSchemaVersion
 
 Set schema standard to one of:
 
-* ERC-721 (Image URL only, just like in TestNet 1.0)
-* SimpleKV (Simple key-value JSON format)
+* ImageURL (Image URL only, just like in TestNet 1.0)
+* Unique
 * OpenSea
 * Tezos TZIP-16 (https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-16/tzip-16.md)
+
+The data schema is used by NFT wallets in order to display the token metadata, as well as offchain token data (such as images, etc.) correctly in the wallet. `Unique Wallet <https://uniqueapps.usetech.com/#/nft>`_ currently supports `ImageURL` and `Unique` formats.
+
+**Image URL**
+
+This schema format assumes saving the image URL template in `constOnChainSchema`. The image template allows NFT wallets to reconstruct the full image URL for each token using its ID. The URL template can contain {id} placeholder that will be replaced with the actual token ID when the image URL is reconstructed.
+
+Example::
+
+    https://ipfs-gateway.usetech.com/ipns/QmaMtDqE9nhMX9RQLTpaCboqg7bqkb6Gi67iCKMe8NDpCE/images/punks/image{id}.png
+
+**Unique**
+
+The `Unique` format allows NFT wallets to decode on-chain token metadata and access off-chain data. This format is currently evolving and may update in the future. It supports three schemas: constant on-chain, variable on-chain, and off-chain. The schema is the JSON string that contains information about how to access and decode token metadata.
+
+In case of on-chain metadata, the data is binary (i.e. an array of bytes), so the schema shows how to convert that binary on-chain data into human readable entries. Schema object contains the array of entries. Each entry is a JSON object. It has the name key (e.g. "Trait 1" in the example below), and properties: type, byte size, and optional list of values. Type can be one of "enum", "number", or "string". In case of `enum` type, `values` contain the string value for each ordinary integer value of enum. For example, if the byte referred by "Trait 1" equals 0x01, the value displayed in the NFT wallet for it will be "Red Lipstick".
+
+In case of off-chain metadata, the data is accessed at a 3rd party or an IPFS URL. URLs may contain the {id} placeholder that will be replaced by the wallet in order to reconstruct the URL for that resource. Currently the Unique Wallet only supports "image" entry (just like in the example below).
+
+Example for const or variable on-chain::
+
+    {
+        [
+            {"Trait 1": 
+                {
+                    "type": "enum",
+                    "size": 1,
+                    "values": ["Black Lipstick","Red Lipstick","Smile","Teeth Smile","Purple Lipstick","Nose Ring","Asian Eyes","Sun Glasses","Red Glasses","Round Eyes","Left Earring","Right Earring","Two Earrings","Brown Beard","Mustache-Beard","Mustache","Regular Beard","Up Hair","Down Hair","Mahawk","Red Mahawk","Orange Hair","Bubble Hair","Emo Hair","Thin Hair","Bald","Blonde Hair","Caret Hair","Pony Tails","Cigar","Pipe"]
+                }
+            }
+        ]
+    }
+
+Example for off-chain::
+
+    {
+        "image": "https://ipfs-gateway.usetech.com/ipns/QmaMtDqE9nhMX9RQLTpaCboqg7bqkb6Gi67iCKMe8NDpCE/images/punks/image{id}.png"
+    }
 
 **Permissions**
 
