@@ -631,7 +631,7 @@ The `Unique` format allows NFT wallets to decode on-chain token metadata and acc
 
 In case of on-chain metadata, the data is binary (i.e. an array of bytes), so the schema shows how to convert that binary on-chain data into human readable entries. Schema object contains the array of entries. Each entry is a JSON object. It has the name key (e.g. "Trait 1" in the example below), and properties: type, byte size, and optional list of values. Type can be one of "enum", "number", or "string". In case of `enum` type, `values` contain the string value for each ordinary integer value of enum. For example, if the byte referred by "Trait 1" equals 0x01, the value displayed in the NFT wallet for it will be "Red Lipstick".
 
-In case of off-chain metadata, the data is accessed at a 3rd party or an IPFS URL. URLs may contain the {id} placeholder that will be replaced by the wallet in order to reconstruct the URL for that resource. Currently the Unique Wallet only supports "image" entry (just like in the example below).
+In case of off-chain metadata, the data is accessed at a 3rd party or an IPFS URL. URLs may contain the {id} placeholder that will be replaced by the wallet in order to reconstruct the URL for that resource. Currently the Unique Wallet only supports "metadata" entry (just like in the example below). The JSON object returned by the metadata endpoint must contain "image" key with image URL value.
 
 Example for const or variable on-chain::
 
@@ -647,11 +647,18 @@ Example for const or variable on-chain::
         ]
     }
 
-Example for off-chain::
+Example for off-chain schema::
 
     {
-        "image": "https://ipfs-gateway.usetech.com/ipns/QmaMtDqE9nhMX9RQLTpaCboqg7bqkb6Gi67iCKMe8NDpCE/images/punks/image{id}.png"
+        "metadata": "https://ipfs-gateway.usetech.com/ipns/QmaMtDqE9nhMX9RQLTpaCboqg7bqkb6Gi67iCKMe8NDpCE/metadata/token{id}"
     }
+
+Example of data returned from metadata endpoint for token ID 1::
+
+    {
+        "image" : "https://ipfs-gateway.usetech.com/ipns/QmaMtDqE9nhMX9RQLTpaCboqg7bqkb6Gi67iCKMe8NDpCE/images/punks/image1.png"
+    }
+
 
 **Permissions**
 
