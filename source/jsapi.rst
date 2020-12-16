@@ -257,7 +257,9 @@ setCollectionLimits
 
 **Description**
 
-Sets some collection limits and starts enforcing them immediately (with no exception for collection owner or admins). By default the collection limits are not set, so for example, the number of items that an addres can own is not limited. When the limits are set, the current number of owned items will be checked, and if it already exceeds the limit, the transaction will fail. After the limits are set, they start being enforced:
+Sets some collection limits and starts enforcing them immediately (with no exception for collection owner or admins). By default the collection limits are not set, so for example, the number of items that an addres can own is not limited. When the limits are set, the current number of owned items will be checked, and if it already exceeds the limit, the transaction will fail. After the limits are set, they start being enforced.
+
+Note that some bounds are also set by the global chain limits (see `setChainLimits`). The more restrictive limits will always apply. 
 
     * `account_token_ownership_limit` - Maximum number of tokens that one address can own. Default value is not limited, maximum value is 10,000,000. When the number of tokens owned by a single address reaches this number, no more tokens can be transferred or minted to this address.
     * `nft_sponsor_timeout` - Time interval in blocks that defines once per how long a transfer transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
