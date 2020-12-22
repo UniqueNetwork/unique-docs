@@ -895,7 +895,7 @@ toggleContractWhiteList
 
 **Description**
 
-Enable the white list for a contract. Only addresses added to the white list with `addToContractWhiteList`_ will be able to call this smart contract.
+Enable the white list for a contract. Only addresses added to the white list with `addToContractWhiteList`_ (as well as the contract owner) will be able to call this smart contract.
 
 **Permissions**
 
@@ -904,7 +904,7 @@ Enable the white list for a contract. Only addresses added to the white list wit
 **Parameters**
 
 * contractAddress: Address of the contract
-
+* enable: Boolean that tells to either enable (if true) or disable (if false) the white list for that smart contract
 
 addToContractWhiteList
 ^^^^^^^^^^^^^^^^^^^^^^
