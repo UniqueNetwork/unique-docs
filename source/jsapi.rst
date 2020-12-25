@@ -541,7 +541,7 @@ approve
 
 **Description**
 
-Set, change, or remove approved address to transfer the ownership of the NFT.
+Set, change, or remove approved address to transfer the ownership of the token. The Amount value must be between 0 and owned amount or 1 for NFT.
 
 **Permissions**
 
@@ -551,9 +551,14 @@ Set, change, or remove approved address to transfer the ownership of the NFT.
 
 **Parameters**
 
-* Approved: Address that is approved to transfer this NFT or zero (if needed to remove approval)
+* Spender: Address that is approved to transfer this token
 * CollectionId: ID of collection
 * ItemId: ID of the item
+* Amount: 
+
+    * Non-Fungible Mode: Required, must be 1 (for approval) or 0 (for disapproval). 
+    * Fungible Mode: Required, amount to add to approved amounts for the Spender or 0 (to remove approvals)
+    * Re-Fungible Mode: Required, amount to add to approved amounts for the Spender or 0 (to remove approvals)
 
 setApprovalForAll (not yet available)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
