@@ -142,7 +142,7 @@ Update token custom data (the changeable part).
 **Parameters**
 
 * CollectionID: ID of the collection
-* ItemID: ID of NFT to burn
+* ItemID: ID of NFT to set metadata for
 
 
 addCollectionAdmin
@@ -360,6 +360,16 @@ This method destroys a concrete instance of NFT.
 
 * CollectionID: ID of the collection
 * ItemID: ID of NFT to burn
+
+    * Non-Fungible Mode: Required
+    * Fungible Mode: Ignored
+    * Re-Fungible Mode: Required
+* Value: Amount to burn
+
+    * Non-Fungible Mode: Ignored (only the whole token can be burned)
+    * Fungible Mode: Must specify transferred amount
+    * Re-Fungible Mode: Ignored (the owned portion is burned completely)
+
 
 **Events**
 
@@ -772,7 +782,7 @@ In order to get a data schema for the collection, one should use following query
       MintMode: false,
       OffchainSchema: "",
       Sponsor: 5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM,
-      UnconfirmedSponsor: 5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM,
+      SponsorConfirmed: false,
       VariableOnChainSchema: "",
       ConstOnChainSchema: ""
     }
@@ -895,7 +905,7 @@ toggleContractWhiteList
 
 **Description**
 
-Enable the white list for a contract. Only addresses added to the white list with `addToContractWhiteList`_ (as well as the contract owner) will be able to call this smart contract.
+Enable the white list for a contract. If enabled, only addresses added to the white list with `addToContractWhiteList`_ (as well as the contract owner) will be able to call this smart contract. If disabled, all addresses can call this smart contract.
 
 **Permissions**
 
