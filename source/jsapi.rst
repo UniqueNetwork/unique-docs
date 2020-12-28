@@ -286,7 +286,7 @@ createItem (Mint)
 
 **Description**
 
-This method creates a concrete instance of NFT Collection created with createCollection method.
+This method creates a concrete instance of NFT, Fungible, or ReFungible Collection created with `createCollection`_ method.
 
 **Permissions**
 
@@ -301,14 +301,25 @@ This method creates a concrete instance of NFT Collection created with createCol
 **Parameters**
 
 * CollectionID: ID of the collection
-* Properties: Array of bytes that contains NFT properties. Since NFT Module is agnostic of properties’ meaning, it is treated purely as an array of bytes
-* Owner: Address, initial owner of the NFT
+* Owner: Address, initial owner of the token
+* Properties: Depends on collection type
+
+  * NFT: Arrays of bytes that contain NFT properties. Since NFT Module is agnostic of properties’ meaning, it is treated purely as an array of bytes.
+
+    * const_data: Immutable properties
+    * variable_data: Mutable properties
+  * Fungible: Amount to create (multiplied by 10 to the decimals power. E.g. if decimals equals 2, number 301 creates 3.01 tokens)
+  * ReFungible: Same as NFT
 
 **Events**
 
 * ItemCreated
     * CollectionID: ID of collection
-    * ItemId: Identifier of newly created NFT, which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
+    * ItemId: Depends on the collection type:
+    
+      * NFT: Identifier of newly created NFT. which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
+      * Fungible: Item IDs are not used, so the value is just 0
+      * ReFungible: Same as NFT
 
 
 createMultipleItems
@@ -316,7 +327,7 @@ createMultipleItems
 
 **Description**
 
-This method creates multiple instances of NFT Collection created with createCollection method.
+This method creates multiple instances of NFT, Fungible, or ReFungible Collection created with `createCollection`_ method.
 
 **Permissions**
 
@@ -331,16 +342,20 @@ This method creates multiple instances of NFT Collection created with createColl
 **Parameters**
 
 * CollectionID: ID of the collection
-* Properties: Array of properties with one element for each created NFT. One element of this array is an array of bytes that contains NFT properties. Since NFT Module is agnostic of properties’ meaning, it is treated purely as an array of bytes.
-* Owner: Address, initial owner of all NFTs created in this transaction
+* Owner: Address, initial owner of all tokens created in this transaction
+* Items: Array of items to create. Each single item is described by properties as in `createItem`_ method
 
 **Events**
 
-One `ItemCreated` event is emitted for each created NFT 
+One `ItemCreated` event is emitted for each created token
 
 * ItemCreated
     * CollectionID: ID of collection
-    * ItemId: Identifier of newly created NFT, which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
+    * ItemId: Depends on the collection type:
+    
+      * NFT: Identifier of newly created NFT. which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
+      * Fungible: Item IDs are not used, so the value is just 0
+      * ReFungible: Same as NFT
 
 
 burnItem
