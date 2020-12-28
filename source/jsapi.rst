@@ -308,7 +308,7 @@ This method creates a concrete instance of NFT, Fungible, or ReFungible Collecti
 
     * const_data: Immutable properties
     * variable_data: Mutable properties
-  * Fungible: Amount to create (multiplied by 10 to the decimals power. E.g. if decimals equals 2, number 301 creates 3.01 tokens)
+  * Fungible: Amount to create (multiplied by 10 to the decimalPoints power. E.g. if decimalPoints equals 2, number 301 creates 3.01 tokens)
   * ReFungible: Same as NFT
 
 **Events**
