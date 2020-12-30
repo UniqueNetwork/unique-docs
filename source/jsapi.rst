@@ -333,11 +333,9 @@ Sets some collection limits and starts enforcing them immediately (with no excep
 Note that some bounds are also set by the global chain limits (see `setChainLimits`). The more restrictive limits will always apply. 
 
     * `account_token_ownership_limit` - Maximum number of tokens that one address can own. Default value is not limited, maximum value is 10,000,000. When the number of tokens owned by a single address reaches this number, no more tokens can be transferred or minted to this address.
-    * `nft_sponsor_timeout` - Time interval in blocks that defines once per how long a transfer transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
-    * `fungible_sponsor_timeout` - same for fungible transfers
-    * `refungible_sponsor_timeout` - same for refungible transfers
     * `token_limit`  - total amount of tokens that can be minted in this collection. Default value is unlimited. If the value is not set (equals to default), the number of tokens is not limited until this limit is set. When the limit is set, the NFT pallet will check if the number of minted tokens is less or equal than the parameter value. If the number of minted tokens is greater than this number, the transaction will fail. This limit is designed to feacilitate token scarcity. So, it can only be set to a lower value than previous (or if previous value is default).
     * `sponsored_mint_size` - maximum byte size of custom NFT data that can be sponsored when tokens are minted in sponsored mode. If the amount of custom data is greater than this parameter when tokens are minted, then the transaction sender will pay transaction fees when minting tokens.
+    * `sponsor_timeout` - Time interval in blocks that defines once per how long a non-privileged user transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
 
 **Permissions**
 
@@ -345,7 +343,8 @@ Note that some bounds are also set by the global chain limits (see `setChainLimi
 
 **Parameters**
 
-* CollectionLimits structure (see the description of parameters above)
+* collectionId: ID of the collection to set limits for
+* CollectionLimits structure (see the description of fields above)
 
 
 
