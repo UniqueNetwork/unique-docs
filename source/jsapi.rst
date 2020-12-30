@@ -55,6 +55,77 @@ Once you've got all parameters, connect to the node like this::
 Collection Management
 ---------------------
 
+Collection Properties
+^^^^^^^^^^^^^^^^^^^^^
+
+The following query can be used to get collection state::
+
+    await api.query.nft.collection(collectionId);
+
+which returns an object like the following (for an NFT collection taken as example)::
+
+    {
+        Owner: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY,
+        Mode: {
+            NFT: null
+        },
+        Access: Normal,
+        DecimalPoints: 0,
+        Name: [
+            110,
+            97,
+            109,
+            101,
+            0
+        ],
+        Description: [
+            100,
+            101,
+            115,
+            99,
+            114,
+            105,
+            112,
+            116,
+            105,
+            111,
+            110,
+            0
+        ],
+        TokenPrefix: 0x70726566697800,
+        MintMode: false,
+        OffchainSchema: ,
+        SchemaVersion: ImageURL,
+        Sponsor: 5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM,
+        SponsorConfirmed: false,
+        Limits: {
+            AccountTokenOwnershipLimit: 10,000,000,
+            SponsoredMintSize: 4,294,967,295,
+            TokenLimit: 4,294,967,295,
+            SponsorTimeout: 14,400
+        },
+        VariableOnChainSchema: ,
+        ConstOnChainSchema: 
+    }
+
+**Fields**
+
+    * Owner - Collection owner
+    * Mode - type of collection (NFT, Fungible (ERC-20), or ReFungible)
+    * Access - Normal (for public access) or WhiteList (for restricted access)
+    * DecimalPoints - Number of decimal digits for value (only for Fungible and ReFungible collections)
+    * Name - Collection name (up to 64 UTF-16 characters)
+    * Description - Collection description (up to 256 UTF-16 characters)
+    * TokenPrefix - Token name as displayed in wallets (up to 16 UTF-8 characters)
+    * MintMode - True, if anyone is allowed to mint. False otherwise. See `setMintPermission`_
+    * SchemaVersion - see `Data Schema`_
+    * OffchainSchema - see `Data Schema`_
+    * VariableOnChainSchema - see `Data Schema`_
+    * ConstOnChainSchema - see `Data Schema`_
+    * Sponsor - see `Ecomonic Models`_
+    * SponsorConfirmed - see `Ecomonic Models`_
+    * Limits - see `setCollectionLimits`_
+
 createCollection
 ^^^^^^^^^^^^^^^^
 
@@ -68,9 +139,9 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 
 **Parameters**
 
-* collectionName: UTF-16 string with collection name (limit 64 characters), will be stored as zero-terminated 
-* collectionDescription: UTF-16 string with collection description (limit 256 characters), will be stored as zero-terminated 
-* tokenPrefix: UTF-8 string with token prefix, limit 16 characters, will be stored as zero-terminated
+* collectionName: UTF-16 string with collection name (limit 64 characters) 
+* collectionDescription: UTF-16 string with collection description (limit 256 characters) 
+* tokenPrefix: UTF-8 string with token prefix, limit 16 characters
 * collectionType:
 
     * 0 - Invalid (collection does not exist, if type is 0)
