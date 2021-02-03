@@ -16,9 +16,9 @@ Step 1 is getting the list of collections, in which user owns tokens. There are 
 Option 1 - Traversing Events
 ----------------------------
 
-`This PolkadotJS guide<https://polkadot.js.org/docs/api/examples/promise/system-events>`_ explains how to tranverse events in a substrate based blockchain. 
+`This PolkadotJS guide <https://polkadot.js.org/docs/api/examples/promise/system-events>`_ explains how to tranverse events in a substrate based blockchain. 
 
-The events that we are looking for are `Transfer` in `transfer <jsapi.rst#transfer>`_ extrinsic. It has parameters: Collection ID+Token ID, sender and recipient, which are the wallet addresses that exchanged NFT, and `ItemCreated` in `createItem (Mint)<jsapi.rst#createitem-mint>`_ extrinsic, which contains Collection ID and Recipient (wallet) address.
+The events that we are looking for are `Transfer` in `transfer <jsapi.html#transfer>`_ extrinsic. It has parameters: Collection ID+Token ID, sender and recipient, which are the wallet addresses that exchanged NFT, and `ItemCreated` in `createItem (Mint) <jsapi.html#createitem-mint>`_ extrinsic, which contains Collection ID and Recipient (wallet) address.
 
 Option 2 - Manual Input
 -----------------------
@@ -95,5 +95,8 @@ The return contains the list of token IDs. Return example::
     ]
 
 
-3. 
+3. Token Details
+================
+
+Reading token details is done with a query that depends on the collection type. For NFT tokens, the `nftItemList` state variable should be used. For ReFungible collection it is `reFungibleItemList`.
 
