@@ -390,7 +390,7 @@ This method creates a concrete instance of NFT, Fungible, or ReFungible Collecti
       * NFT: Identifier of newly created NFT. which is unique within the Collection, so the NFT is uniquely identified with a pair of values: CollectionId and ItemId.
       * Fungible: Item IDs are not used, so the value is just 0
       * ReFungible: Same as NFT
-
+    * Recipient: Address that receives token
 
 createMultipleItems
 ^^^^^^^^^^^^^^^^^^^
@@ -557,6 +557,14 @@ Change ownership of the token.
     * Fungible Mode: Must specify transferred amount
     * Re-Fungible Mode: Must specify transferred portion (between 0 and 1)
 
+**Events**
+
+* Transfer
+    
+    * Collection ID + Token ID - packed in u64. The 0xFFFF0000 mask identifies collection ID, 0x0000FFFF mask yields token ID
+    * Sender
+    * Recipient 
+    * Amount (always 1 for NFT)
 
 transferWithData (not yet available)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -16,3 +16,4 @@ Contents
    jsapi
    unityapi
    dotnetapi
+   walletguide
