@@ -33,7 +33,7 @@ Each collection then can be queried with::
     
 and will contain the Name, Description, and TokenPrefix fields encoded as UTF-16 in response like this::
 
-        {
+    {
         Owner: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY,
         Mode: {
             NFT: null
@@ -122,7 +122,7 @@ For example, this query::
 
     api.query.nft.nftItemList(collectionId, tokenId)
 
-returns the NFT information:
+returns the NFT information::
 
     {
         Owner: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY,
