@@ -63,7 +63,7 @@ and will contain the Name, Description, and TokenPrefix fields encoded as UTF-16
         ],
         TokenPrefix: 0x70726566697800,
         MintMode: false,
-        OffchainSchema: ,
+        OffchainSchema: https://example.com/images/{id}.png,
         SchemaVersion: ImageURL,
         Sponsor: 5C4hrfjw9DjXZTzV3MwzrrAr9P1MJhSrvWGWqi1eSuyUpnhM,
         SponsorConfirmed: false,
@@ -94,9 +94,50 @@ The return contains the list of token IDs. Return example::
         2888
     ]
 
-
 3. Token Details
 ================
 
-Reading token details is done with a query that depends on the collection type. For NFT tokens, the `nftItemList` state variable should be used. For ReFungible collection it is `reFungibleItemList`.
+Token details allow the wallet to get access to token image and decode its metadata into a human readable format.
 
+There are two types of token details: Common (or similarly structured) for all tokens in the collection, and details that are only relevant for one particular token (like a CryptoKitty name, for example).
+
+Image and Off-chain Metadata
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Even though images and large metadata will be generally stored off-chain (due to cost and efficiency reasons), Unique enables 3rd party wallets to access this data without using any 3rd party APIs. The collection contains the `OffchainSchema` field, which contains the schema string. Even though the collection owners can set an arbitrary string in this field, they are encouraged to use metadata standards in order to be compatible with Unique and 3rd party wallets. Currently there are two schema versions:
+
+* ImageURL
+* Unique
+
+ImageURL is very limited. It only allows to set the URL template like "https://example.com/images/{id}.png", which allows replacement of `{id}` placeholder in order to get the image for the token with a particular ID.
+
+Unique schema is much more flexible. It allows not only to encode image URL templates, but also to set the URL for the API that stores token off-chain metadata, and define rules about what token on-chain data bytes mean and how to decode them into a human readable format. The `Data Schema <jsapi.html#data-schema>`_ section describes how to do it. We encourage wallet developers to start implementation with ImageURL schema, then proceed to off-chain part of Unique schema, and finally implement the on-chain part of Unique schema.
+
+On-Chain Token Data
+^^^^^^^^^^^^^^^^^^^
+
+Reading token on-chain data is done with a query that depends on the collection type. For NFT tokens, the `nftItemList` state variable should be used. For ReFungible collection it is `reFungibleItemList`. 
+
+For example, this query::
+
+    api.query.nft.nftItemList(collectionId, tokenId)
+
+returns the NFT information:
+
+    {
+        Owner: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY,
+        ConstData: <TOKEN METADATA>,
+        VariableData: <TOKEN USER DATA>
+    }
+
+The `ConstData` field contains the token metadata string that cannot be changed and is set when the token is minted. 
+
+The `VariableData` field (which, by the way, is also described by the schema) contains bytes that can be changed by the current owner, and usually will be changed by the application, but the wallet may allow users to change this (as long as the data stays within the schema).
+
+
+
+**********
+Kusama NFT
+**********
+
+TBD
