@@ -739,22 +739,20 @@ Example::
 
 The `Unique` format allows NFT wallets to decode on-chain token metadata and access off-chain data. This format is currently evolving and may update in the future. It supports three schemas: constant on-chain, variable on-chain, and off-chain. The schema is the JSON string that contains information about how to access and decode token metadata.
 
-In case of on-chain metadata, the data is binary (i.e. an array of bytes), so the schema shows how to convert that binary on-chain data into human readable entries. Schema object contains the array of entries. Each entry is a JSON object. It has the name key (e.g. "Trait 1" in the example below), and properties: type, byte size, and optional list of values. Type can be one of "enum", "number", or "string". In case of `enum` type, `values` contain the string value for each ordinary integer value of enum. For example, if the byte referred by "Trait 1" equals 0x01, the value displayed in the NFT wallet for it will be "Red Lipstick".
+In case of on-chain metadata, the data is binary (i.e. an array of bytes), so the schema shows how to convert that binary on-chain data into human readable entries. Schema object contains the mapping of entries. Each entry is a JSON object. It has the name key (e.g. "Trait 1" in the example below), and properties: type, byte size, and optional list of values. Type can be one of "enum", "number", or "string". In case of `enum` type, `values` contain the string value for each ordinary integer value of enum. For example, if the byte referred by "Trait 1" equals 0x01, the value displayed in the NFT wallet for it will be "Red Lipstick".
 
 In case of off-chain metadata, the data is accessed at a 3rd party or an IPFS URL. URLs may contain the {id} placeholder that will be replaced by the wallet in order to reconstruct the URL for that resource. Currently the Unique Wallet only supports "metadata" entry (just like in the example below). The JSON object returned by the metadata endpoint must contain "image" key with image URL value.
 
 Example for const or variable on-chain::
 
     {
-        [
-            {"Trait 1": 
-                {
-                    "type": "enum",
-                    "size": 1,
-                    "values": ["Black Lipstick","Red Lipstick","Smile","Teeth Smile","Purple Lipstick","Nose Ring","Asian Eyes","Sun Glasses","Red Glasses","Round Eyes","Left Earring","Right Earring","Two Earrings","Brown Beard","Mustache-Beard","Mustache","Regular Beard","Up Hair","Down Hair","Mahawk","Red Mahawk","Orange Hair","Bubble Hair","Emo Hair","Thin Hair","Bald","Blonde Hair","Caret Hair","Pony Tails","Cigar","Pipe"]
-                }
+        {"Trait 1": 
+            {
+                "type": "enum",
+                "size": 1,
+                "values": ["Black Lipstick","Red Lipstick","Smile","Teeth Smile","Purple Lipstick","Nose Ring","Asian Eyes","Sun Glasses","Red Glasses","Round Eyes","Left Earring","Right Earring","Two Earrings","Brown Beard","Mustache-Beard","Mustache","Regular Beard","Up Hair","Down Hair","Mahawk","Red Mahawk","Orange Hair","Bubble Hair","Emo Hair","Thin Hair","Bald","Blonde Hair","Caret Hair","Pony Tails","Cigar","Pipe"]
             }
-        ]
+        }
     }
 
 Example for off-chain schema::
