@@ -31,7 +31,7 @@ Each collection then can be queried with::
 
     api.query.nft.collection(collectionId)
     
-and will contain the Name, Description, and TokenPrefix fields encoded as UTF-16 in response like this::
+and will contain the Name and Description fields encoded as UTF-16, and TokenPrefix encoded as UTF-8 in response like this::
 
     {
         Owner: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY,
@@ -76,6 +76,8 @@ and will contain the Name, Description, and TokenPrefix fields encoded as UTF-16
         VariableOnChainSchema: ,
         ConstOnChainSchema: 
     }
+
+Token prefix is used to display tokens in the wallet. The examples of refixes can be: BTC, ETH, etc.
 
 
 2. User Tokens

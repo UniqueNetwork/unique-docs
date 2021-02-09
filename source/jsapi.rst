@@ -113,7 +113,7 @@ which returns an object like the following (for an NFT collection taken as examp
     * Owner - Collection owner
     * Mode - type of collection (NFT, Fungible (ERC-20), or ReFungible)
     * Access - Normal (for public access) or WhiteList (for restricted access)
-    * DecimalPoints - Number of decimal digits for value (only for Fungible and ReFungible collections)
+    * DecimalPoints - Number of decimal digits for value (only for Fungible collections)
     * Name - Collection name (up to 64 UTF-16 characters)
     * Description - Collection description (up to 256 UTF-16 characters)
     * TokenPrefix - Token name as displayed in wallets (up to 16 UTF-8 characters)
@@ -147,8 +147,8 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
     * 0 - Invalid (collection does not exist, if type is 0)
     * 1 - NFT. All items in ItemList are unique and indivisible (decimalPoints parameter must be 0). Item IDs are unique, and one item may only be owned by one address.
     * 2 - Fungible. Collection does not have custom data associated with token (custom data size parameter must be 0). All Item IDs are the same and all that is recorded in ItemList in value field is the owner address and owned amount. The value is fixed point decimal with decimalPoints set as in the parameter to this method.
-    * 3 - Re-Fungible. Custom data is allowed, but Items IDs are not unique. One item may be owned by more than one address. Value in ItemList entry corresponds to the owned portion of token. Value is a decimal fixed point number and may have values from 0 to 1 (excluding 0, since in that case the entry must be removed from the dictionary).
-* decimalPoints: Decimal points to be used in token amounts. If set to 0, the tokens are indivisible.
+    * 3 - Re-Fungible. Custom data is allowed, but Items IDs are not unique. One item may be owned by more than one address. Value in ItemList entry corresponds to the owned portion of token. Value is an integer number and corresponds to the number of owned pieces.
+* decimalPoints: Decimal points to be used in token amounts. If set to 0, tokens are indivisible.
 
 **Events**
 
@@ -379,7 +379,11 @@ This method creates a concrete instance of NFT, Fungible, or ReFungible Collecti
     * const_data: Immutable properties
     * variable_data: Mutable properties
   * Fungible: Amount to create (multiplied by 10 to the decimalPoints power. E.g. if decimalPoints equals 2, number 301 creates 3.01 tokens)
-  * ReFungible: Same as NFT
+  * ReFungible:
+
+    * const_data: Immutable properties
+    * variable_data: Mutable properties
+    * pieces: Number of pieces this token is divided into
 
 **Events**
 
