@@ -63,6 +63,13 @@ function getCreateMultipleItemsResult(events) {
   }
   return ids;
 }
+/**
+ * @param {any[]}
+ * @returns {number[]}
+ */
+function getCreateMultipleItemsResult(events) {
+  return events.filter(({ event: { method, section } }) => section === 'nft' && method === 'ItemCreated').map(e => +e.event.data[1].toString());
+}
 
 function createTxWrapper(txGetter, resultGetter, patchArgs = a => a) {
   return async (api, privateKey, ...txArgs) => {
