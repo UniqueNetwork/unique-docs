@@ -1,5 +1,5 @@
 const config = {
-  wsEndpoint: process.env.SUBSTRATE_URL || 'wss://unique.usetech.com',
+  wsEndpoint: process.env.SUBSTRATE_URL || 'ws://127.0.0.1:9944',
 };
 
 module.exports = config;

@@ -165,6 +165,8 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 
     await api.tx.nft.createCollection();
 
+More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
+
 changeCollectionOwner
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -398,6 +400,29 @@ This method creates a concrete instance of NFT, Fungible, or ReFungible Collecti
       * ReFungible: Same as NFT
     * Recipient: Address that receives token
 
+**Code example**:
+
+::
+
+    const nftItemId = await createItem(
+        api,
+        alice,
+        nftCollectionId,
+        // Token receiver
+        alice.address,
+        {
+        nft: {
+            // Arbitary data assigned to token
+            const_data: [1, 2, 3, 4],
+            // Variable data can be set later with setVariableMetadata
+            variable_data: [1, 2, 3, 4],
+        },
+        }
+    );
+
+
+More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
+
 createMultipleItems
 ^^^^^^^^^^^^^^^^^^^
 
@@ -467,6 +492,14 @@ This method destroys a concrete instance of NFT.
 * ItemDestroyed
     * CollectionID: ID of collection
     * ItemId: Identifier of burned NFT
+
+**Code example**:
+
+::
+
+    await burnItem(api, alice, nftCollectionId, nftItemId, 1);
+
+More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
 
 Getting Token Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^
