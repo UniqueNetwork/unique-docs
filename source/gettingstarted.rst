@@ -4,7 +4,7 @@ Getting Started
 Creating Accounts
 -----------------
 
-Unique Network, like most blockchains, is based on accounts or addresses. An address can own NFTs or some Unique token. It can sign transactions to transfer these valuable assets to other addresses or to make some actions in Decentralized Apps (dApps). For example, an address can buy and sell NFTs on the NFT Market.
+`Unique Network <https://uniquenetwork.io>`_, like most blockchains, is based on accounts or addresses. An address can own NFTs or some Unique token. It can sign transactions to transfer these valuable assets to other addresses or to make some actions in Decentralized Apps (dApps). For example, an address can buy and sell NFTs on the NFT Market.
 
 The typical Unique address looks like this::
 
