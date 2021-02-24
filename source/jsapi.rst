@@ -567,7 +567,8 @@ Change ownership of the token.
 
 * Transfer
     
-    * Collection ID + Token ID - packed in u64. The 0xFFFF0000 mask identifies collection ID, 0x0000FFFF mask yields token ID
+    * Collection ID
+    * Token ID
     * Sender
     * Recipient 
     * Amount (always 1 for NFT)
