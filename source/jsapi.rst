@@ -334,9 +334,9 @@ Sets some collection limits and starts enforcing them immediately (with no excep
 
 Note that some bounds are also set by the global chain limits (see `setChainLimits`). The more restrictive limits will always apply. 
 
-    * `AccountTokenOwnershipLimit` - Maximum number of tokens that one address can own. Default value is not limited, maximum value is 10,000,000. When the number of tokens owned by a single address reaches this number, no more tokens can be transferred or minted to this address.
+    * `AccountTokenOwnershipLimit` - Maximum number of tokens that one address can own. Default value is the maximum value of 10,000,000,000,000. When the number of tokens owned by a single address reaches this number, no more tokens can be transferred or minted to this address.
     * `SponsoredMintSize` - maximum byte size of custom NFT data that can be sponsored when tokens are minted in sponsored mode. If the amount of custom data is greater than this parameter when tokens are minted, then the transaction sender will pay transaction fees when minting tokens.
-    * `TokenLimit`  - total amount of tokens that can be minted in this collection. Default value is unlimited. If the value is not set (equals to default), the number of tokens is not limited until this limit is set. When the limit is set, the NFT pallet will check if the number of minted tokens is less or equal than the parameter value. If the number of minted tokens is greater than this number, the transaction will fail. This limit is designed to feacilitate token scarcity. So, it can only be set to a lower value than previous (or if previous value is default).
+    * `TokenLimit`  - total amount of tokens that can be minted in this collection. Default value is the maximum value of 10,000,000,000,000. When the limit is set, the NFT pallet will check if the number of minted tokens is less or equal than the parameter value. If the number of minted tokens is greater than this number, the transaction will fail. This limit is designed to feacilitate token scarcity. So, it can only be set to a lower value than previous (or if previous value is default).
     * `SponsorTimeout` - Time interval in blocks that defines once per how long a non-privileged user transfer or mint transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
     * `OwnerCanTransfer` - Boolean value that tells if collection owner or admins can transfer or burn tokens owned by other non-privileged users. This is a one-way switch: If it is ever disabled (set to `false`), it cannot be re-enabled (set back to `true`).
     * `OwnerCanDestroy` - Boolean value that tells if collection owner can destroy it. This is a one-way switch: If it is ever disabled (set to `false`), it cannot be re-enabled (set back to `true`).
@@ -601,9 +601,10 @@ Change ownership of the token.
 
 * Transfer
     
-    * Collection ID + Token ID - packed in u64. The 0xFFFFFFFF00000000 mask identifies collection ID, 0x00000000FFFFFFFF mask yields token ID
-    * Sender
-    * Recipient 
+    * Collection ID
+    * Token ID
+    * Sender address
+    * Recipient address
     * Amount (always 1 for NFT)
 
 transferWithData (not yet available)
@@ -647,6 +648,17 @@ Change ownership of a NFT on behalf of the owner. See Approve method for additio
 * Recipient: Address of token recipient
 * CollectionId: ID of collection
 * ItemId: ID of the item
+
+**Events**
+
+* Transfer
+    
+    * Collection ID
+    * Token ID
+    * Sender address
+    * Recipient address
+    * Amount (always 1 for NFT)
+
 
 transferFromWithData (not yet available)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -692,6 +704,17 @@ Set, change, or remove approved address to transfer the ownership of the token. 
     * Non-Fungible Mode: Required, must be 1 (for approval) or 0 (for disapproval). 
     * Fungible Mode: Required, amount to add to approved amounts for the Spender or 0 (to remove approvals)
     * Re-Fungible Mode: Required, amount to add to approved amounts for the Spender or 0 (to remove approvals)
+
+**Events**
+
+* Approved
+
+    * Collection ID
+    * Token ID
+    * Sender address
+    * Spender address
+    * Amount (always 1 for NFT)
+
 
 setApprovalForAll (not yet available)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
