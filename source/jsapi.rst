@@ -909,14 +909,11 @@ setConstOnChainSchema
 
 Set the on-chain schema (string in JSON-schema format) that describes permanent token fields.
 
-The schema must describe the non-changeable token fields. For each field it must include “size” in bytes and “name”. It will be parsed by 3rd party wallets. At the moment of setting the schema it will only be checked to match constant custom data size. 
+This schema describes the serialization of non-changeable token fields. Serialization algorithm depends on the version of schema selected in `setSchemaVersion`_ . Uniue schema uses Google protobuf for serialization, which is described in `setSchemaVersion`_ .
 
-Example::
+The schema will be parsed by 3rd party wallets, but it is not validated at the moment when it is set.
 
-    {
-      “field 1” : 10,
-      “field 2” : 2,
-    }
+Example: see example in `setSchemaVersion`_
 
 **Permissions**
 
