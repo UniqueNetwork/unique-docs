@@ -802,59 +802,47 @@ Example::
 
 The `Unique` format allows NFT wallets to decode on-chain token metadata and access off-chain data. This format is currently evolving and may update in the future. It supports three schemas: constant on-chain, variable on-chain, and off-chain. The schema is the JSON string that contains information about how to access and decode token metadata.
 
-In case of on-chain metadata, the data is binary (i.e. an array of bytes), and it is encoded with SCALE codec, so the schema shows how to deserialize that binary on-chain data into human readable entries.
-
 In case of off-chain metadata, the data is accessed at a 3rd party or an IPFS URL. URLs may contain the {id} placeholder that will be replaced by the wallet in order to reconstruct the URL for that resource. Currently the Unique Wallet only supports "metadata" entry (just like in the example below). The JSON object returned by the metadata endpoint must contain "image" key with image URL value.
 
-Example for const or variable on-chain that is used by SubstraPunks::
+In case of on-chain metadata, the data is binary (i.e. an array of bytes), and it is encoded with protobuf codec, so the schema shows how to deserialize that binary on-chain data into human readable entries. The off-chain schema has the same format as .proto files in protobuf serializer (see example below). The package name should always be equal to `onchainmetadata`, and the root object should always be named `NFTMeta`. In order to encode large strings for converting enum values in multiple languages, one can use JSON transaction object in the single line comments before the enum value in the enum definition (see the example).
 
-    {
-        "Gender": {
-            "_enum": {
-                "Male": null,
-                "Female": null
-            }
-        },
-        "Trait": {
-            "_enum": {
-                "Black Lipstick": null,
-                "Red Lipstick": null,
-                "Smile": null,
-                "Teeth Smile": null,
-                "Purple Lipstick": null,
-                "Nose Ring": null,
-                "Asian Eyes": null,
-                "Sun Glasses": null,
-                "Red Glasses": null,
-                "Round Eyes": null,
-                "Left Earring": null,
-                "Right Earring": null,
-                "Two Earrings": null,
-                "Brown Beard": null,
-                "Mustache-Beard": null,
-                "Mustache": null,
-                "Regular Beard": null,
-                "Up Hair": null,
-                "Down Hair": null,
-                "Mahawk": null,
-                "Red Mahawk": null,
-                "Orange Hair": null,
-                "Bubble Hair": null,
-                "Emo Hair": null,
-                "Thin Hair": null,
-                "Bald": null,
-                "Blonde Hair": null,
-                "Caret Hair": null,
-                "Pony Tails": null,
-                "Cigar": null,
-                "Pipe": null
-            }
-        },
-        "Punk": {
-            "Gender": "Gender",
-            "Traits": "Vec<Trait>"
-        }
+Example for const or variable on-chain that is used by SubstraPunks (shortened version)::
+
+    package onchainmetadata;
+    syntax = "proto3";
+
+    enum Gender {
+        /// {"en": "Male", "ru": "Мужчина"}
+        Male = 0;
+        /// {"en": "Female", "ru": "Женщина"}
+        Female = 1;
+    };
+
+    enum PunkTrait {
+        /// {"en": "Black Lipstick", "ru": "Чёрная помада"}
+        BLACK_LIPSTICK = 0;
+        /// {"en": "Red Lipstick", "ru": "Красная помада"}
+        RED_LIPSTICK = 1;
+        /// {"en": "Smile", "ru": "Улыбка"}
+        SMILE = 2;
+        /// {"en": "Teeth Smile", "ru": "Улыбка с зубами"}
+        TEETH_SMILE = 3;
+        /// {"en": "Purple Lipstick", "ru": "Фиолетовая помада"}
+        PURPLE_LIPSTICK = 4;
+        /// {"en": "Nose Ring", "ru": "Пирсинг в носу"}
+        NOSE_RING = 5;
+        /// {"en": "Asian Eyes", "ru": "Азиатский тип глаз"}
+        ASIAN_EYES = 6;
+        /// {"en": "Sunglasses", "ru": "Солнечные очки"}
+        SUNGLASSES = 7;
+    };
+
+    /// This is the root object of the schema, it will always be called "NFTMeta"
+    message NFTMeta {
+        required Gender gender = 1;
+        repeated PunkTrait traits = 2;
     }
+
 Example for off-chain schema::
 
     {
@@ -867,6 +855,7 @@ Example of data returned from metadata endpoint for token ID 1::
         "image" : "https://ipfs-gateway.usetech.com/ipns/QmaMtDqE9nhMX9RQLTpaCboqg7bqkb6Gi67iCKMe8NDpCE/images/punks/image1.png"
     }
 
+This `protobuf example <https://github.com/usetech-llc/unique-docs/tree/master/examples/protobuf.js>`_ shows how to decode the substrapunk schema using JavaScript.
 
 **Permissions**
 
