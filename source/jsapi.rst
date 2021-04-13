@@ -812,28 +812,28 @@ Example for const or variable on-chain that is used by SubstraPunks (shortened v
     syntax = "proto3";
 
     enum Gender {
-        /// {"en": "Male", "ru": "Мужчина"}
+        /// {"cn": "男性", "en": "Male", "ru": "Мужчина"}
         Male = 0;
-        /// {"en": "Female", "ru": "Женщина"}
+        /// {"cn": "女性", "en": "Female", "ru": "Женщина"}
         Female = 1;
     };
 
     enum PunkTrait {
-        /// {"en": "Black Lipstick", "ru": "Чёрная помада"}
+        /// {"cn": "黑唇", "en": "Black Lipstick", "ru": "Чёрная помада"}
         BLACK_LIPSTICK = 0;
-        /// {"en": "Red Lipstick", "ru": "Красная помада"}
+        /// {"cn": "红唇", "en": "Red Lipstick", "ru": "Красная помада"}
         RED_LIPSTICK = 1;
-        /// {"en": "Smile", "ru": "Улыбка"}
+        /// {"cn": "笑脸", "en": "Smile", "ru": "Улыбка"}
         SMILE = 2;
-        /// {"en": "Teeth Smile", "ru": "Улыбка с зубами"}
+        /// {"cn": "露齿笑脸", "en": "Teeth Smile", "ru": "Улыбка с зубами"}
         TEETH_SMILE = 3;
-        /// {"en": "Purple Lipstick", "ru": "Фиолетовая помада"}
+        /// {"cn": "紫唇", "en": "Purple Lipstick", "ru": "Фиолетовая помада"}
         PURPLE_LIPSTICK = 4;
-        /// {"en": "Nose Ring", "ru": "Пирсинг в носу"}
+        /// {"cn": "鼻环", "en": "Nose Ring", "ru": "Пирсинг в носу"}
         NOSE_RING = 5;
-        /// {"en": "Asian Eyes", "ru": "Азиатский тип глаз"}
+        /// {"cn": "亚洲眼", "en": "Asian Eyes", "ru": "Азиатский тип глаз"}
         ASIAN_EYES = 6;
-        /// {"en": "Sunglasses", "ru": "Солнечные очки"}
+        /// {"cn": "太阳镜", "en": "Sunglasses", "ru": "Солнечные очки"}
         SUNGLASSES = 7;
     };
 
