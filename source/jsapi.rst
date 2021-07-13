@@ -29,15 +29,15 @@ The Unique Network maintains public blockchain nodes to be used by clients for f
 
 The public node URL depends on the network that you would like to connect to:
 
-+-------------+---------------------------+
-| Network     | URL                       |
-+=============+===========================+
-| TestNet 1.0 | wss://unique.usetech.com  |
-+-------------+---------------------------+
-| TestNet 2.0 | Coming soonest..          |
-+-------------+---------------------------+
-| MainNet     | Coming soon...            |
-+-------------+---------------------------+
++-------------+--------------------------------+
+| Network     | URL                            |
++=============+================================+
+| TestNet 1.0 | wss://unique.usetech.com       |
++-------------+--------------------------------+
+| TestNet 2.0 | wss://testnet2.uniquenetwork.io|
++-------------+--------------------------------+
+| MainNet     | Coming soon...                 |
++-------------+--------------------------------+
 
 Once you've got all parameters, connect to the node like this::
 
