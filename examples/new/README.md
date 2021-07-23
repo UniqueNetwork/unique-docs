@@ -68,14 +68,91 @@ in `index.js`
 ```
 [More details](https://unique-network.readthedocs.io/en/latest/jsapi.html?highlight=setCollectionLimits#setcollectionlimits)
 
-### Set the on-chain schema (string in JSON-schema format) that describes permanent token fields.
+
+## How do set up a scheme for a collection and tokens?
+
+Set the on-chain schema (string in JSON-schema format) that describes permanent token fields.
 in `index.js`
 ```js
   await api.setConstOnChainSchema(schema);    
 ```
+This schema describes the serialization of non-changeable token fields. Serialization algorithm depends on the version of schema selected in setSchemaVersion .
+
 [More details](https://unique-network.readthedocs.io/en/latest/jsapi.html#setconstonchainschema)
 
-### Set off-chain data schema. In the initial version of NFT parachain the schema will only reflect image URL. The {id} substring will be parsed to reflect the NFT id.
+Example schema:
+```json
+{
+      nested: {
+        onchainmetadata: {
+          nested: {      
+            NFTMeta: {
+              fields: {
+                name: {
+                  id: 1,
+                  rule: 'required',
+                  type: 'string',
+                }
+              },
+            },
+          },
+        },
+      },
+    }
+```
+```json
+{
+  nested: {
+    onchainmetadata: {
+      nested: {
+        Gender: {
+          options: {
+            Male: '{"en": "Male"}',
+            Female: '{"en": "Female"}',
+          },
+          value: {
+            Male: 0,
+            Female: 1
+          }
+        },
+        NFTMeta: {
+          fields: {
+            gender: {
+              id: 1,
+              rule: 'required',
+              type: 'Gender',
+            },
+          }            
+      }
+    }
+  }
+  }    
+} 
+```
+To create schemas, we use [Protocol Buffers](https://developers.google.com/protocol-buffers/)
+
+
+
+## How to link images and tokens?
+
+Set off-chain data schema. In the initial version of NFT parachain the schema will only reflect image URL. 
+The {id} substring will be parsed to reflect the NFT id.
+
+For example, the schema string for CryptoKitties will look like this:
+```text
+https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/{id}.png
+```
+
+The schema must contain the image and page fields, which should use {id} placeholder that will be replaced by wallets with the actual token ID in order to get the token page and image URLs. Also, there is an optional “audio” field that contains audio file URL associated with the tokens. The schema will be parsed by 3rd party wallets, but not at the moment of setting the schema.
+
+```json
+{
+  “image”: “https://example.com/images/{id}”,
+  “page”: “https://example.com/nft/{id}”,
+  “audio”: “https://example.com/audio/{id}”
+}
+```
+
 in `index.js`
 ```js
   await api.setOffchainSchema(galleryURL)  
