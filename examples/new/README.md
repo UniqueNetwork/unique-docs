@@ -138,9 +138,9 @@ To create schemas, we use [Protocol Buffers](https://developers.google.com/proto
 Set off-chain data schema. In the initial version of NFT parachain the schema will only reflect image URL. 
 The {id} substring will be parsed to reflect the NFT id.
 
-For example, the schema string for CryptoKitties will look like this:
+For example, the schema string for 000webhostapp will look like this:
 ```text
-https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/{id}.png
+https://disignathon.000webhostapp.com/blue/{id}.jpg
 ```
 
 The schema must contain the image and page fields, which should use {id} placeholder that will be replaced by wallets with the actual token ID in order to get the token page and image URLs. Also, there is an optional “audio” field that contains audio file URL associated with the tokens. The schema will be parsed by 3rd party wallets, but not at the moment of setting the schema.
@@ -209,7 +209,7 @@ Configuration can be done through the environment:
 |--|--| -- |
 | WSENDPOINT | The public node URL depends on the network that you would like to connect |  wss://testnet2.uniquenetwork.io |
 | SEED | This mnemonic seed can also be used to sign transactions in JavaScript code. In the examples we use the mnemonic seed for Alice account (seed: “//Alice”), but you can replace it with your seed to work with TestNet or MainNet.| //Alice |
-| GALLERY_URL | In the initial version of NFT parachain the schema will only reflect image URL. The {id} substring will be parsed to reflect the NFT id. | `https://img.cryptokitties.co/test/{id}.png` |
+| GALLERY_URL | In the initial version of NFT parachain the schema will only reflect image URL. The {id} substring will be parsed to reflect the NFT id. | `https://disignathon.000webhostapp.com/blue/{id}.jpg` |
 | COLLECTION_ID | ID of the collection | |
 | OWNER | Address, initial owner of the token | |
 | SCHEMA | This schema describes the serialization of non-changeable token fields. |  `{ nested: { onchainmetadata: { nested: { NFTMeta: { fields: { name: { id: 1, rule: 'required', type: 'string', } }, }, }, }, }, }` |    
@@ -222,7 +222,7 @@ or you can change the file  `config.js` in this section of the code:
   
   #seed = process.env.SEED || '//Alice'
 
-  #galleryUrl = process.env.GALLERY_URL || 'https://img.cryptokitties.co/test/{id}.png'
+  #galleryUrl = process.env.GALLERY_URL || 'https://disignathon.000webhostapp.com/blue/{id}.jpg'
 
   #collectionId = process.env.COLLECTION_ID || 1;
   

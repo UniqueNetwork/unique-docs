@@ -11,7 +11,7 @@ class Config {
   */
   #seed = process.env.SEED || '//Alice'
   // In the initial version of NFT parachain the schema will only reflect image URL. The {id} substring will be parsed to reflect the NFT id.
-  #galleryUrl = process.env.GALLERY_URL || 'https://img.cryptokitties.co/test/{id}.png'
+  #galleryUrl = process.env.GALLERY_URL || 'https://disignathon.000webhostapp.com/blue/{id}.jpg'
 
   #collectionId = process.env.COLLECTION_ID || 1;
   //Address, initial owner of the token
