@@ -351,6 +351,22 @@ Note that some bounds are also set by the global chain limits (see `setChainLimi
 * collectionId: ID of the collection to set limits for
 * CollectionLimits structure (see the description of fields above)
 
+setTransferEnabledFlag
+^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Enable or disable transfers in a collection.
+
+**Permissions**
+
+* Collection Owner
+
+**Parameters**
+
+* CollectionID: ID of the Collection to add admin for
+* TransferFlag: Boolean parameter. If True, allows transfers, otherwise token transfers are frozen
+
 
 
 Token Management
