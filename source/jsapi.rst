@@ -1053,15 +1053,13 @@ Enabling Contract Sponsoring (EVM)
 
 **Description**
 
-In order to enable contract sponsoring on EVM (Ethereum) contract, web3 library needs to be used because EVM contracts are deployed using ETH RPC interface, so the owner of the EVM contract is an Ethereum address. This short example demonstrates how to enable sponsoring for a contract with address stored in `myContractAddress` variable:
+In order to enable contract sponsoring on EVM (Ethereum) contract, web3 library needs to be used because EVM contracts are deployed using ETH RPC interface, so the owner of the EVM contract is an Ethereum address. This short example demonstrates how to enable sponsoring for a contract with address stored in `myContractAddress` variable::
 
-```
-import Web3 from 'web3';
-...
-const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
-await helpers.methods.toggleSponsoring(myContractAddress, true).send({from: owner});
-await helpers.methods.toggleAllowlist(myContractAddress, true).send({ from: owner });
-```
+    import Web3 from 'web3';
+    ...
+    const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
+    await helpers.methods.toggleSponsoring(myContractAddress, true).send({from: owner});
+    await helpers.methods.toggleAllowlist(myContractAddress, true).send({ from: owner });
 
 Note that `helpers.methods.toggleAllowlist` call is also included in this example because enabling allow list is required in order for sponsoring to work (as a security measure). Read more about this below.
 
@@ -1100,14 +1098,12 @@ Settings Contract Sponsoring Rate Limit (EVM)
 
 Set the rate limit for contract sponsoring. The default value for the rate limit is 7200 blocks, i.e. one day. If set to the number B (for blocks), the transactions will be sponsored with a rate limit of B, i.e. fees for every transaction sent to this smart contract will be paid from contract balance if there are at least B blocks between such transactions. Nonetheless, if transactions are sent more frequently, the fees are paid by the sender.
 
-This short example demonstrates how to set sponsoring rate limit of one transaction per 1234 blocks for a contract with address stored in `myContractAddress` variable:
+This short example demonstrates how to set sponsoring rate limit of one transaction per 1234 blocks for a contract with address stored in `myContractAddress` variable::
 
-```
-import Web3 from 'web3';
-...
-const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
-await helpers.methods.setSponsoringRateLimit(myContractAddress, 1234).send({from: owner});
-```
+    import Web3 from 'web3';
+    ...
+    const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
+    await helpers.methods.setSponsoringRateLimit(myContractAddress, 1234).send({from: owner});
 
 **Permissions**
 
@@ -1158,14 +1154,12 @@ Toggle Contract Allow List (EVM)
 
 **Description**
 
-In order to enable allow list on an EVM (Ethereum) contract, web3 library needs to be used because EVM contracts are deployed using ETH RPC interface, so the owner of the EVM contract is an Ethereum address. This short example demonstrates how to enable allow lists for a contract with address stored in `myContractAddress` variable:
+In order to enable allow list on an EVM (Ethereum) contract, web3 library needs to be used because EVM contracts are deployed using ETH RPC interface, so the owner of the EVM contract is an Ethereum address. This short example demonstrates how to enable allow lists for a contract with address stored in `myContractAddress` variable::
 
-```
-import Web3 from 'web3';
-...
-const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
-await helpers.methods.toggleAllowlist(myContractAddress, true).send({ from: owner });
-```
+    import Web3 from 'web3';
+    ...
+    const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
+    await helpers.methods.toggleAllowlist(myContractAddress, true).send({ from: owner });
 
 **Permissions**
 
@@ -1199,14 +1193,12 @@ Managing Allow List for EVM Contracts
 
 A user will be able to call the smart contract only if their address is included in the contract allow list.
 
-This short example uses web3 library and demonstrates how to add or remove a user address to/from the smart contract allow list. The contract address is stored in `myContractAddress` variable:
+This short example uses web3 library and demonstrates how to add or remove a user address to/from the smart contract allow list. The contract address is stored in `myContractAddress` variable::
 
-```
-import Web3 from 'web3';
-...
-const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
-await helpers.methods.toggleAllowed(myContractAddress, caller, true).send({from: owner});
-```
+    import Web3 from 'web3';
+    ...
+    const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
+    await helpers.methods.toggleAllowed(myContractAddress, caller, true).send({from: owner});
 
 **Permissions**
 
