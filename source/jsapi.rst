@@ -200,11 +200,11 @@ DANGEROUS: Destroys collection and all NFTs within this collection. Users irreco
 * CollectionId - ID of the collection to destroy
 
 setVariableMetaData
-^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 **Description**
 
-Update token custom data (the changeable part).
+Update token custom data (the changeable part). Permissions (whether a user can change this metadata) are set by `setmetadataupdatepermissionflag`_ method.
 
 **Permissions**
 
@@ -367,6 +367,25 @@ Enable or disable transfers in a collection.
 * CollectionID: ID of the Collection to add admin for
 * TransferFlag: Boolean parameter. If True, allows transfers, otherwise token transfers are frozen
 
+setMetadataUpdatePermissionFlag
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Set the permissions for token metadata updates. By default, the variable NFT metadata can be updated by a user who owns the token, but this behavior can be changed and set to one of the following:
+
+* Item_owner: Default, user who owns the token.
+* Admin: Only collection owner and admins can change variable metadata. A smart contract may also be made an admin in order to change token properties trustlessly.
+* None: Nobody can update veriable metadata, including the token and collection owner. This option is irreversible. Once it is set, the variable token metadata becomes permanent in this collection.
+
+**Permissions**
+
+* Collection Owner
+
+**Parameters**
+
+* CollectionID: ID of the Collection to add admin for
+* PermissionFlag: Permission flag, see description above
 
 
 Token Management
@@ -1080,7 +1099,7 @@ enableContractSponsoring (Ink!)
 
 Note: The Ink! smart contracts are currently disabled.
 
-Enable the Ink! smart contract to pay for its own transaction using its endowment. Can only be called by the contract owner, i.e. address that deployed this smart contract. The sponsoring will only start working after the rate limit is set with `setContractSponsoringRateLimit`_.
+Enable the Ink! smart contract to pay for its own transaction using its endowment. Can only be called by the contract owner, i.e. address that deployed this smart contract. The sponsoring will only start working after the rate limit is set with `setContractSponsoringRateLimit-ink`_.
 
 **Permissions**
 
@@ -1141,13 +1160,13 @@ Sponsoring smart contracts is tricky. Users can generate addresses very quickly 
 
 One way to protect funds is to introduce severe rate limits globally, i.e. for all users of the smart contract, but it also degrades the user experience, especially if there are malicious players who race for free contract calls.
 
-The `setContractSponsoringRateLimit` only limits the call rate for each address, so it is designed to be used with White Lists, enabled by `toggleContractWhiteList`_, when the number of addresses is limited.
+The `setContractSponsoringRateLimit-ink`_ only limits the call rate for each address, so it is designed to be used with White Lists, enabled by `toggleContractWhiteList`_, when the number of addresses is limited.
 
 So the quick recipe for secure smart contract sponsoring is::
 
     RATE LIMIT + WHITE LIST
 
-The contract owner (address that deployed it) can add user addresses to the white lists using `addToContractWhiteList`_ method. For a dApp this can be combined with user registration, when the account is confirmed (or captcha or KYC is passed, for example).
+The contract owner (address that deployed it) can add user addresses to the white lists using `addToContractWhiteList-ink`_ method. For a dApp this can be combined with user registration, when the account is confirmed (or captcha or KYC is passed, for example).
 
 Toggle Contract Allow List (EVM)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1175,7 +1194,7 @@ toggleContractWhiteList (Ink!)
 
 **Description**
 
-Enable the white list for a contract. If enabled, only addresses added to the white list with `addToContractWhiteList`_ (as well as the contract owner) will be able to call this smart contract. If disabled, all addresses can call this smart contract.
+Enable the white list for a contract. If enabled, only addresses added to the white list with `addToContractWhiteList-ink`_ (as well as the contract owner) will be able to call this smart contract. If disabled, all addresses can call this smart contract.
 
 **Permissions**
 
