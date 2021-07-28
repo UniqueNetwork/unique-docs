@@ -204,9 +204,11 @@ setVariableMetaData
 
 **Description**
 
-Update token custom data (the changeable part). Permissions (whether a user can change this metadata) are set by `setmetadataupdatepermissionflag`_ method.
+Update token custom data (the changeable part).
 
 **Permissions**
+
+Permissions (whether a user can change this metadata) are set by `setmetadataupdatepermissionflag`_ method. The default is:
 
 * Collection Owner
 * Collection Admin
