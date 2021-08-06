@@ -35,7 +35,7 @@ Unique TestNet Faucet
 
 In order to get transactions working on the TestNet, you will need some TestNet tokens. 
 
-You can get them from our Telegram bot: `@UniqueFaucetBot <https://t.me/UniqueFaucetBot>`_
+You can get them from our Telegram bot: `@UniqueFaucetBot <https://t.me/unique2faucetbot>`_
 
 Once the transaction is processed, you may open the `UniqueApps UI <https://uniqueapps.usetech.com/#/accounts>`_ to see how your address' balance increased (make sure the UI is connected to the TestNet in settings page).
 
