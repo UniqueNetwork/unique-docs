@@ -1,0 +1,33 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "Example for retrieving NFT properties",
+  "main": "index.js",
+  "directories": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/usetech-llc/unique-docs.git"
+  },
+  "keywords": [
+    "Create",
+    "collection",
+    "token",
+    "rally",
+    "Polkadot.js"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/usetech-llc/unique-docs/issues"
+  },
+  "homepage": "https://github.com/usetech-llc/unique-docs#readme",
+  "dependencies": {
+    "@polkadot/keyring": "7.1.1",
+    "@polkadot/util-crypto": "7.1.1",
+    "protobufjs": "^6.11.2"
+  },
+  "devDependencies": {}
+}
