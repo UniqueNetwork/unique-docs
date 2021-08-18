@@ -25,8 +25,9 @@
   },
   "homepage": "https://github.com/usetech-llc/unique-docs#readme",
   "dependencies": {
-    "@polkadot/keyring": "7.1.1",
-    "@polkadot/util-crypto": "7.1.1",
+    "@polkadot/api": "5.5.1",
+    "@polkadot/util-crypto": "7.2.1",
+    "got": "10.7.0",
     "protobufjs": "^6.11.2"
   },
   "devDependencies": {}
