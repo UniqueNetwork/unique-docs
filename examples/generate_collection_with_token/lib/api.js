@@ -41,7 +41,7 @@ class Api {
   };
 
   async #submitTransaction(transaction, seed) {
-    const getTransactionStatus =  (event, status) => {
+    const getTransactionStatus =  (events, status) => {
       if (status.isReady) {
         return 'NotReady';
       }
@@ -90,6 +90,8 @@ class Api {
           collectionId = parseInt(data[0].toString());
         }
       });
+      //this.#collectionId  = collectionId;
+      console.log(collectionId);
       return collectionId;
     }
 
@@ -187,20 +189,20 @@ class Api {
     return this;
   }
 
-  async setCollectionLimits(limits) {
+  async setCollectionLimits(limits, id = this.#collectionId) {
     const sourceLimits = ((await this.#api.query.nft.collectionById(id)).toJSON()).Limits;
-    const newLimits = { ...sourceLimits, ...limits }
-    const tx = this.#api.nft.setCollectionLimits(this.#collectionId, newLimits);
+    const newLimits = { ...sourceLimits, TokenLimit: limits }
+    const tx = this.#api.tx.nft.setCollectionLimits(id, newLimits);
     await this.#submitTransaction(tx, this.#seed);
   }
 
-  async setConstOnChainSchema(jsonSchema) {
-    const tx = this.#api.nft.setConstOnChainSchema(this.#collectionId, JSON.stringify(jsonSchema));
+  async setConstOnChainSchema(jsonSchema, id = this.#collectionId) {
+    const tx = this.#api.tx.nft.setConstOnChainSchema(id, JSON.stringify(jsonSchema));
     await this.#submitTransaction(tx, this.#seed);
   }
 
-  async setOffchainSchema(galleryUrl) {
-    const tx = this.#api.nft.setOffchainSchema(this.#collectionId, galleryUrl);
+  async setOffchainSchema(galleryUrl, id = this.#collectionId) {    
+    const tx = this.#api.tx.nft.setOffchainSchema(id, galleryUrl);    
     await this.#submitTransaction(tx, this.#seed);
   }  
   async createItem({ 
@@ -210,7 +212,7 @@ class Api {
     const data = {
       NFT: { const_data: Array.from(buffer), variable_data: [] },
     }
-    const tx = this.#api.nft.createItem(collectionId, owner, data);
+    const tx = this.#api.tx.nft.createItem(collectionId, owner, data);
     await this.#submitTransactionItem(tx, this.#seed);
   }
 }

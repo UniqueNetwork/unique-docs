@@ -3,6 +3,7 @@ const { ProtobufNFT } = require("./lib/proto");
 const { Api } = require("./lib/api");
 
 
+
 async function* genItems(limit) {
   const items = Array.from({ length: limit }, (_, item) => item + 1);
   for (const item of items) {
@@ -40,7 +41,8 @@ async function main() {
     // set seed
     api.setSeed(config.getSeed());
     // create collection
-    const collectionId = await api.createCollection(configCollection);
+    const execut = await api.createCollection(configCollection);
+    const collectionId = execut.getCollectionId();
     // set limit on token
     await api.setCollectionLimits(limit);
     // set schema on collection
@@ -48,7 +50,7 @@ async function main() {
     // set image url
     await api.setOffchainSchema(galleryURL);
 
-   for await (const item of genItems(LIMIT_TOKEN)) {     
+   for await (const item of genItems(limit)) {     
      const serializeItem = protobuff.serializeNFT(item);     
      const token = {
        buffer: serializeItem,
@@ -57,10 +59,12 @@ async function main() {
      }
      //mint tokens
      await api.createItem(token);
-   }
+   }   
   } catch (error) {
     console.log(error);
   }
 }
 
-main();
+main()
+  .then(() => process.exit() )
+  .catch((error) => console.error(error));
