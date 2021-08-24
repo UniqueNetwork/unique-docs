@@ -27,7 +27,7 @@ The new address will appear in the list:
 .. image:: _static/address03.png
   :width: 500
 
-Finally, you can open the `UniqueApps UI <https://uniqueapps.usetech.com/#/accounts>`_ to see your address.
+Finally, you can open the `UniqueApps UI <https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Ftestnet2.uniquenetwork.io#/accounts>`_ to see your address.
 
 
 Unique TestNet Faucet
