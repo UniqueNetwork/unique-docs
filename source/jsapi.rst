@@ -29,15 +29,15 @@ The Unique Network maintains public blockchain nodes to be used by clients for f
 
 The public node URL depends on the network that you would like to connect to:
 
-+-------------+---------------------------+
-| Network     | URL                       |
-+=============+===========================+
-| TestNet 1.0 | wss://unique.usetech.com  |
-+-------------+---------------------------+
-| TestNet 2.0 | Coming soonest..          |
-+-------------+---------------------------+
-| MainNet     | Coming soon...            |
-+-------------+---------------------------+
++-------------+--------------------------------+
+| Network     | URL                            |
++=============+================================+
+| TestNet 1.0 | wss://unique.usetech.com       |
++-------------+--------------------------------+
+| TestNet 2.0 | wss://testnet2.uniquenetwork.io|
++-------------+--------------------------------+
+| MainNet     | Coming soon...                 |
++-------------+--------------------------------+
 
 Once you've got all parameters, connect to the node like this::
 
@@ -165,6 +165,8 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 
     await api.tx.nft.createCollection();
 
+More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
+
 changeCollectionOwner
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -198,13 +200,15 @@ DANGEROUS: Destroys collection and all NFTs within this collection. Users irreco
 * CollectionId - ID of the collection to destroy
 
 setVariableMetaData
-^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 **Description**
 
 Update token custom data (the changeable part).
 
 **Permissions**
+
+Permissions (whether a user can change this metadata) are set by `setmetadataupdatepermissionflag`_ method. The default is:
 
 * Collection Owner
 * Collection Admin
@@ -332,12 +336,13 @@ Sets some collection limits and starts enforcing them immediately (with no excep
 
 Note that some bounds are also set by the global chain limits (see `setChainLimits`). The more restrictive limits will always apply. 
 
-    * `AccountTokenOwnershipLimit` - Maximum number of tokens that one address can own. Default value is not limited, maximum value is 10,000,000. When the number of tokens owned by a single address reaches this number, no more tokens can be transferred or minted to this address.
+    * `AccountTokenOwnershipLimit` - Maximum number of tokens that one address can own. Default value is the maximum value of 10,000,000,000,000. When the number of tokens owned by a single address reaches this number, no more tokens can be transferred or minted to this address.
     * `SponsoredMintSize` - maximum byte size of custom NFT data that can be sponsored when tokens are minted in sponsored mode. If the amount of custom data is greater than this parameter when tokens are minted, then the transaction sender will pay transaction fees when minting tokens.
-    * `TokenLimit`  - total amount of tokens that can be minted in this collection. Default value is unlimited. If the value is not set (equals to default), the number of tokens is not limited until this limit is set. When the limit is set, the NFT pallet will check if the number of minted tokens is less or equal than the parameter value. If the number of minted tokens is greater than this number, the transaction will fail. This limit is designed to feacilitate token scarcity. So, it can only be set to a lower value than previous (or if previous value is default).
-    * `SponsorTimeout` - Time interval in blocks that defines once per how long a non-privileged user transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
+    * `TokenLimit`  - total amount of tokens that can be minted in this collection. Default value is the maximum value of 10,000,000,000,000. When the limit is set, the NFT pallet will check if the number of minted tokens is less or equal than the parameter value. If the number of minted tokens is greater than this number, the transaction will fail. This limit is designed to feacilitate token scarcity. So, it can only be set to a lower value than previous (or if previous value is default).
+    * `SponsorTimeout` - Time interval in blocks that defines once per how long a non-privileged user transfer or mint transaction can be sponsored. Default value is 14400 (24 hrs), allowed values are from 0 (not limited) to 10,368,000 (1 month). 
     * `OwnerCanTransfer` - Boolean value that tells if collection owner or admins can transfer or burn tokens owned by other non-privileged users. This is a one-way switch: If it is ever disabled (set to `false`), it cannot be re-enabled (set back to `true`).
     * `OwnerCanDestroy` - Boolean value that tells if collection owner can destroy it. This is a one-way switch: If it is ever disabled (set to `false`), it cannot be re-enabled (set back to `true`).
+    * `VariableMetaDataSponsoringRateLimit` - Time interval in blocks that defines once per how long a non-privileged user transaction to update variable metadata can be sponsored. Default value is 0 (never sponsored), allowed values are from 0 (never sponsored) to 10,368,000 (1 month).
 
 **Permissions**
 
@@ -348,6 +353,41 @@ Note that some bounds are also set by the global chain limits (see `setChainLimi
 * collectionId: ID of the collection to set limits for
 * CollectionLimits structure (see the description of fields above)
 
+setTransferEnabledFlag
+^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Enable or disable transfers in a collection.
+
+**Permissions**
+
+* Collection Owner
+
+**Parameters**
+
+* CollectionID: ID of the Collection to add admin for
+* TransferFlag: Boolean parameter. If True, allows transfers, otherwise token transfers are frozen
+
+setMetadataUpdatePermissionFlag
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Set the permissions for token metadata updates. By default, the variable NFT metadata can be updated by a user who owns the token, but this behavior can be changed and set to one of the following:
+
+* Item_owner: Default, user who owns the token.
+* Admin: Only collection owner and admins can change variable metadata. A smart contract may also be made an admin in order to change token properties trustlessly.
+* None: Nobody can update veriable metadata, including the token and collection owner. This option is irreversible. Once it is set, the variable token metadata becomes permanent in this collection.
+
+**Permissions**
+
+* Collection Owner
+
+**Parameters**
+
+* CollectionID: ID of the Collection to add admin for
+* PermissionFlag: Permission flag, see description above
 
 
 Token Management
@@ -397,6 +437,29 @@ This method creates a concrete instance of NFT, Fungible, or ReFungible Collecti
       * Fungible: Item IDs are not used, so the value is just 0
       * ReFungible: Same as NFT
     * Recipient: Address that receives token
+
+**Code example**:
+
+::
+
+    const nftItemId = await createItem(
+        api,
+        alice,
+        nftCollectionId,
+        // Token receiver
+        alice.address,
+        {
+        nft: {
+            // Arbitary data assigned to token
+            const_data: [1, 2, 3, 4],
+            // Variable data can be set later with setVariableMetadata
+            variable_data: [1, 2, 3, 4],
+        },
+        }
+    );
+
+
+More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
 
 createMultipleItems
 ^^^^^^^^^^^^^^^^^^^
@@ -467,6 +530,14 @@ This method destroys a concrete instance of NFT.
 * ItemDestroyed
     * CollectionID: ID of collection
     * ItemId: Identifier of burned NFT
+
+**Code example**:
+
+::
+
+    await burnItem(api, alice, nftCollectionId, nftItemId, 1);
+
+More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
 
 Getting Token Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -569,8 +640,8 @@ Change ownership of the token.
     
     * Collection ID
     * Token ID
-    * Sender
-    * Recipient 
+    * Sender address
+    * Recipient address
     * Amount (always 1 for NFT)
 
 transferWithData (not yet available)
@@ -614,6 +685,17 @@ Change ownership of a NFT on behalf of the owner. See Approve method for additio
 * Recipient: Address of token recipient
 * CollectionId: ID of collection
 * ItemId: ID of the item
+
+**Events**
+
+* Transfer
+    
+    * Collection ID
+    * Token ID
+    * Sender address
+    * Recipient address
+    * Amount (always 1 for NFT)
+
 
 transferFromWithData (not yet available)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -659,6 +741,17 @@ Set, change, or remove approved address to transfer the ownership of the token. 
     * Non-Fungible Mode: Required, must be 1 (for approval) or 0 (for disapproval). 
     * Fungible Mode: Required, amount to add to approved amounts for the Spender or 0 (to remove approvals)
     * Re-Fungible Mode: Required, amount to add to approved amounts for the Spender or 0 (to remove approvals)
+
+**Events**
+
+* Approved
+
+    * Collection ID
+    * Token ID
+    * Sender address
+    * Spender address
+    * Amount (always 1 for NFT)
+
 
 setApprovalForAll (not yet available)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -746,20 +839,45 @@ Example::
 
 The `Unique` format allows NFT wallets to decode on-chain token metadata and access off-chain data. This format is currently evolving and may update in the future. It supports three schemas: constant on-chain, variable on-chain, and off-chain. The schema is the JSON string that contains information about how to access and decode token metadata.
 
-In case of on-chain metadata, the data is binary (i.e. an array of bytes), so the schema shows how to convert that binary on-chain data into human readable entries. Schema object contains the mapping of entries. Each entry is a JSON object. It has the name key (e.g. "Trait 1" in the example below), and properties: type, byte size, and optional list of values. Type can be one of "enum", "number", or "string". In case of `enum` type, `values` contain the string value for each ordinary integer value of enum. For example, if the byte referred by "Trait 1" equals 0x01, the value displayed in the NFT wallet for it will be "Red Lipstick".
-
 In case of off-chain metadata, the data is accessed at a 3rd party or an IPFS URL. URLs may contain the {id} placeholder that will be replaced by the wallet in order to reconstruct the URL for that resource. Currently the Unique Wallet only supports "metadata" entry (just like in the example below). The JSON object returned by the metadata endpoint must contain "image" key with image URL value.
 
-Example for const or variable on-chain::
+In case of on-chain metadata, the data is binary (i.e. an array of bytes), and it is encoded with protobuf codec, so the schema shows how to deserialize that binary on-chain data into human readable entries. The off-chain schema has the same format as .proto files in protobuf serializer (see example below). The package name should always be equal to `onchainmetadata`, and the root object should always be named `NFTMeta`. In order to encode large strings for converting enum values in multiple languages, one can use JSON transaction object in the single line comments before the enum value in the enum definition (see the example).
 
-    {
-        {"Trait 1": 
-            {
-                "type": "enum",
-                "size": 1,
-                "values": ["Black Lipstick","Red Lipstick","Smile","Teeth Smile","Purple Lipstick","Nose Ring","Asian Eyes","Sun Glasses","Red Glasses","Round Eyes","Left Earring","Right Earring","Two Earrings","Brown Beard","Mustache-Beard","Mustache","Regular Beard","Up Hair","Down Hair","Mahawk","Red Mahawk","Orange Hair","Bubble Hair","Emo Hair","Thin Hair","Bald","Blonde Hair","Caret Hair","Pony Tails","Cigar","Pipe"]
-            }
-        }
+Example for const or variable on-chain that is used by SubstraPunks (shortened version)::
+
+    package onchainmetadata;
+    syntax = "proto3";
+
+    enum Gender {
+        /// {"cn": "男性", "en": "Male", "ru": "Мужчина"}
+        Male = 0;
+        /// {"cn": "女性", "en": "Female", "ru": "Женщина"}
+        Female = 1;
+    };
+
+    enum PunkTrait {
+        /// {"cn": "黑唇", "en": "Black Lipstick", "ru": "Чёрная помада"}
+        BLACK_LIPSTICK = 0;
+        /// {"cn": "红唇", "en": "Red Lipstick", "ru": "Красная помада"}
+        RED_LIPSTICK = 1;
+        /// {"cn": "笑脸", "en": "Smile", "ru": "Улыбка"}
+        SMILE = 2;
+        /// {"cn": "露齿笑脸", "en": "Teeth Smile", "ru": "Улыбка с зубами"}
+        TEETH_SMILE = 3;
+        /// {"cn": "紫唇", "en": "Purple Lipstick", "ru": "Фиолетовая помада"}
+        PURPLE_LIPSTICK = 4;
+        /// {"cn": "鼻环", "en": "Nose Ring", "ru": "Пирсинг в носу"}
+        NOSE_RING = 5;
+        /// {"cn": "亚洲眼", "en": "Asian Eyes", "ru": "Азиатский тип глаз"}
+        ASIAN_EYES = 6;
+        /// {"cn": "太阳镜", "en": "Sunglasses", "ru": "Солнечные очки"}
+        SUNGLASSES = 7;
+    };
+
+    /// This is the root object of the schema, it will always be called "NFTMeta"
+    message NFTMeta {
+        required Gender gender = 1;
+        repeated PunkTrait traits = 2;
     }
 
 Example for off-chain schema::
@@ -774,6 +892,7 @@ Example of data returned from metadata endpoint for token ID 1::
         "image" : "https://ipfs-gateway.usetech.com/ipns/QmaMtDqE9nhMX9RQLTpaCboqg7bqkb6Gi67iCKMe8NDpCE/images/punks/image1.png"
     }
 
+This `protobuf example <https://github.com/usetech-llc/unique-docs/tree/master/examples/protobuf.js>`_ shows how to decode the substrapunk schema using JavaScript.
 
 **Permissions**
 
@@ -827,14 +946,11 @@ setConstOnChainSchema
 
 Set the on-chain schema (string in JSON-schema format) that describes permanent token fields.
 
-The schema must describe the non-changeable token fields. For each field it must include “size” in bytes and “name”. It will be parsed by 3rd party wallets. At the moment of setting the schema it will only be checked to match constant custom data size. 
+This schema describes the serialization of non-changeable token fields. Serialization algorithm depends on the version of schema selected in `setSchemaVersion`_ . Uniue schema uses Google protobuf for serialization, which is described in `setSchemaVersion`_ .
 
-Example::
+The schema will be parsed by 3rd party wallets, but it is not validated at the moment when it is set.
 
-    {
-      “field 1” : 10,
-      “field 2” : 2,
-    }
+Example: see example in `setSchemaVersion`_
 
 **Permissions**
 
@@ -953,12 +1069,20 @@ Disable sponsoring and switch back to pay-per-own-transaction model.
 
 * CollectionID: ID of collection
 
-enableContractSponsoring
-^^^^^^^^^^^^^^^^^^^^^^^^
+Enabling Contract Sponsoring (EVM)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description**
 
-Enable the smart contract to pay for its own transaction using its endowment. Can only be called by the contract owner, i.e. address that deployed this smart contract. The sponsoring will only start working after the rate limit is set with `setContractSponsoringRateLimit`_.
+In order to enable contract sponsoring on EVM (Ethereum) contract, web3 library needs to be used because EVM contracts are deployed using ETH RPC interface, so the owner of the EVM contract is an Ethereum address. This short example demonstrates how to enable sponsoring for a contract with address stored in `myContractAddress` variable::
+
+    import Web3 from 'web3';
+    ...
+    const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
+    await helpers.methods.toggleSponsoring(myContractAddress, true).send({from: owner});
+    await helpers.methods.toggleAllowlist(myContractAddress, true).send({ from: owner });
+
+Note that `helpers.methods.toggleAllowlist` call is also included in this example because enabling allow list is required in order for sponsoring to work (as a security measure). Read more about this below.
 
 **Permissions**
 
@@ -970,8 +1094,52 @@ Enable the smart contract to pay for its own transaction using its endowment. Ca
 * enable: Boolean flag to enable or disable smart contact self-sponsoring
 
 
-setContractSponsoringRateLimit
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+enableContractSponsoring (Ink!)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Note: The Ink! smart contracts are currently disabled.
+
+Enable the Ink! smart contract to pay for its own transaction using its endowment. Can only be called by the contract owner, i.e. address that deployed this smart contract. The sponsoring will only start working after the rate limit is set with `setContractSponsoringRateLimit-ink`_.
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the contract to sponsor
+* enable: Boolean flag to enable or disable smart contact self-sponsoring
+
+Settings Contract Sponsoring Rate Limit (EVM)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Set the rate limit for contract sponsoring. The default value for the rate limit is 7200 blocks, i.e. one day. If set to the number B (for blocks), the transactions will be sponsored with a rate limit of B, i.e. fees for every transaction sent to this smart contract will be paid from contract balance if there are at least B blocks between such transactions. Nonetheless, if transactions are sent more frequently, the fees are paid by the sender.
+
+This short example demonstrates how to set sponsoring rate limit of one transaction per 1234 blocks for a contract with address stored in `myContractAddress` variable::
+
+    import Web3 from 'web3';
+    ...
+    const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
+    await helpers.methods.setSponsoringRateLimit(myContractAddress, 1234).send({from: owner});
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the contract to sponsor
+* rate_limit: Number of blocks to wait until the next sponsored transaction is allowed
+
+
+setContractSponsoringRateLimit (Ink!)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Note: The Ink! smart contracts are currently disabled.
 
 **Description**
 
@@ -994,21 +1162,41 @@ Sponsoring smart contracts is tricky. Users can generate addresses very quickly 
 
 One way to protect funds is to introduce severe rate limits globally, i.e. for all users of the smart contract, but it also degrades the user experience, especially if there are malicious players who race for free contract calls.
 
-The `setContractSponsoringRateLimit` only limits the call rate for each address, so it is designed to be used with White Lists, enabled by `toggleContractWhiteList`_, when the number of addresses is limited.
+The `setContractSponsoringRateLimit-ink`_ only limits the call rate for each address, so it is designed to be used with White Lists, enabled by `toggleContractWhiteList`_, when the number of addresses is limited.
 
 So the quick recipe for secure smart contract sponsoring is::
 
     RATE LIMIT + WHITE LIST
 
-The contract owner (address that deployed it) can add user addresses to the white lists using `addToContractWhiteList`_ method. For a dApp this can be combined with user registration, when the account is confirmed (or captcha or KYC is passed, for example).
+The contract owner (address that deployed it) can add user addresses to the white lists using `addToContractWhiteList-ink`_ method. For a dApp this can be combined with user registration, when the account is confirmed (or captcha or KYC is passed, for example).
 
-
-toggleContractWhiteList
-^^^^^^^^^^^^^^^^^^^^^^^
+Toggle Contract Allow List (EVM)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description**
 
-Enable the white list for a contract. If enabled, only addresses added to the white list with `addToContractWhiteList`_ (as well as the contract owner) will be able to call this smart contract. If disabled, all addresses can call this smart contract.
+In order to enable allow list on an EVM (Ethereum) contract, web3 library needs to be used because EVM contracts are deployed using ETH RPC interface, so the owner of the EVM contract is an Ethereum address. This short example demonstrates how to enable allow lists for a contract with address stored in `myContractAddress` variable::
+
+    import Web3 from 'web3';
+    ...
+    const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
+    await helpers.methods.toggleAllowlist(myContractAddress, true).send({ from: owner });
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the EVM contract
+* enable: Boolean that tells to either enable (if true) or disable (if false) the allow list for that EVM smart contract
+
+toggleContractWhiteList (Ink!)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+Enable the white list for a contract. If enabled, only addresses added to the white list with `addToContractWhiteList-ink`_ (as well as the contract owner) will be able to call this smart contract. If disabled, all addresses can call this smart contract.
 
 **Permissions**
 
@@ -1019,8 +1207,32 @@ Enable the white list for a contract. If enabled, only addresses added to the wh
 * contractAddress: Address of the contract
 * enable: Boolean that tells to either enable (if true) or disable (if false) the white list for that smart contract
 
-addToContractWhiteList
-^^^^^^^^^^^^^^^^^^^^^^
+Managing Allow List for EVM Contracts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description**
+
+A user will be able to call the smart contract only if their address is included in the contract allow list.
+
+This short example uses web3 library and demonstrates how to add or remove a user address to/from the smart contract allow list. The contract address is stored in `myContractAddress` variable::
+
+    import Web3 from 'web3';
+    ...
+    const helpers = new web3.eth.Contract(contractHelpersAbi as any, '0x842899ECF380553E8a4de75bF534cdf6fBF64049', {from: caller, ...GAS_ARGS});
+    await helpers.methods.toggleAllowed(myContractAddress, caller, true).send({from: owner});
+
+**Permissions**
+
+* Address that deployed smart contract
+
+**Parameters**
+
+* contractAddress: Address of the contract
+* Address to add/remove
+* enable: Boolean flag. True means address is included in the allow list and can call the contract. False means address cannot call the contract.
+
+addToContractWhiteList (Ink!)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description**
 
@@ -1036,8 +1248,8 @@ Add an address to smart contract white list.
 * Address to add
 
 
-removeFromContractWhiteList
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+removeFromContractWhiteList (Ink!)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description**
 

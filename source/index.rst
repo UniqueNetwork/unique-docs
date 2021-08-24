@@ -1,8 +1,7 @@
 Welcome to Unique Network
 =========================
 
-Unique Network is the new home for NFT projects.
-
+`Unique Network <https://uniquenetwork.io>`_ is the new home for NFT projects.
 
 Contents
 --------
