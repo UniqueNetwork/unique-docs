@@ -21,7 +21,7 @@ Some features are yet to be tested/added:
 * Create/Transfer/Burn an NFT for a collection
 * Set/View collection offchain data schema
 
-For demonstration, please use [these instructions](https://github.com/usetech-llc/nft_unity/blob/master/src/DemoApplication/readme.md)
+For demonstration, please use [these instructions](https://github.com/UniqueNetwork/nft_unity/blob/master/src/DemoApplication/readme.md)
 
 
 

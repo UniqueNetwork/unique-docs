@@ -6,7 +6,7 @@ Welcome to the White Lable Suite
 
 Welcome to Unique.network White Label Suite. Here you will find all the information and repositories you will need to build a proof of concept (POC) NFT marketplace. 
 
-For an overview check out the 'unique network tech paper <https://github.com/usetech-llc/unique_techpaper>'_
+For an overview check out the 'unique network tech paper <https://github.com/UniqueNetwork/unique_techpaper>'_
 
 For developers start at 'unique-network <https://unique-network.readthedocs.io/en/latest/overview.html>_ 
 
@@ -20,15 +20,15 @@ For creating accounts and getting TestNet Unique tokens see 'Getting Started <ht
 
 This is where you can find the code to build a POC NFT marketplace. 
 
-Bootstrap: https://github.com/usetech-llc/marketplace_docker
-Service layer API: https://github.com/usetech-llc/marketplace_backend
-Minting backend: https://github.com/usetech-llc/gallery_backend
-Frontend: https://github.com/usetech-llc/marketplace
+Bootstrap: https://github.com/UniqueNetwork/marketplace_docker
+Service layer API: https://github.com/UniqueNetwork/marketplace_backend
+Minting backend: https://github.com/UniqueNetwork/unique-gallery
+Frontend: https://github.com/UniqueNetwork/unique-marketplace
 
 Quick start
 =============
 
-git clone https://github.com/usetech-llc/marketplace_docker
+git clone https://github.com/UniqueNetwork/marketplace_docker
 
 cd/marketplace_docker 
 
@@ -42,7 +42,7 @@ Now you are ready to create your User Interface
 
 Next set the environment (.env) file with the address and seed phrase created when 'Getting Started <https://unique-network.readthedocs.io/en/latest/gettingstarted.html#>'
 
-here:  https://github.com/usetech-llc/marketplace_docker/blob/master/.env.sample 
+here:  https://github.com/UniqueNetwork/marketplace_docker/blob/master/.env.sample 
 
 Insert image - Alice 
 
@@ -69,12 +69,12 @@ To the 'Polkadot.js.org/apps <https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Ftest
 - Set the admin to MarketplaceUniqueAddress address so it is both owner and admin of the contract
 
 To create a collection for minting NFTs 
-This can be found in the 'gallery_backend <https://github.com/usetech-llc/gallery_backend>' repository  
+This can be found in the 'gallery_backend <https://github.com/UniqueNetwork/unique-gallery-api>' repository  
 
-- edit 'create_collection.js <https://github.com/usetech-llc/gallery_backend/blob/e1cd938fe971628ba7f4c960d09f2d4aceb3e3a2/src/create_collection.js#L52> file 
+- edit 'create_collection.js <https://github.com/UniqueNetwork/unique-gallery-api/blob/e1cd938fe971628ba7f4c960d09f2d4aceb3e3a2/src/create_collection.js#L52> file 
 
 
-- Set collection name, description, and token prefix #L52 'here <https://github.com/usetech-llc/gallery_backend/blob/e1cd938fe971628ba7f4c960d09f2d4aceb3e3a2/src/create_collection.js#L52>'
+- Set collection name, description, and token prefix #L52 'here <https://github.com/UniqueNetwork/unique-gallery-api/blob/e1cd938fe971628ba7f4c960d09f2d4aceb3e3a2/src/create_collection.js#L52>'
 - Replace "whitelabel.market" with the gallery URL #L88
 
 - Set the ADMIN_SEED (instead of "//Alice") in the 'config.js <https://ipfs.io/ipfs/QmUj91enBVyq1eJkqkwmaYnoGSgRd4sYUrvbMiZz4iA45C?filename=changemyname.config.js>' file and copy this file to the src folder.

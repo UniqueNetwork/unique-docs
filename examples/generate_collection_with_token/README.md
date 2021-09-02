@@ -19,7 +19,7 @@ The typical Unique address looks like this:
 ## [Opening Connection](#open_connection)
 
 The Unique Network maintains public blockchain nodes to be used by clients for free. In order to connect to a client, you will need the public node URL and runtime types file that is located at
-[runtime_types.json](https://github.com/usetech-llc/unique-docs/tree/master/examples/config/runtime_types.json)
+[runtime_types.json](https://github.com/UniqueNetwork/unique-docs/tree/master/examples/config/runtime_types.json)
 
 ```js
 const { ApiPromise, WsProvider } = require('@polkadot/api');
@@ -196,7 +196,7 @@ in `index.js`
     await api.createItem(token);
 ```
 
-[More complete examples](https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js)
+[More complete examples](https://github.com/UniqueNetwork/unique-docs/blob/master/examples/token_management.js)
 
 [More details](https://unique-network.readthedocs.io/en/latest/jsapi.html?highlight=setCollectionLimits#createitem-mint)
 

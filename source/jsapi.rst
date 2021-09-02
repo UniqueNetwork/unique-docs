@@ -16,7 +16,7 @@ The Polkadot JS API is available as an npm package and can be included in `packa
 Examples
 --------
 
-The examples are provided for this documentation in the `examples folder <https://github.com/usetech-llc/unique-docs/tree/master/examples/>`_. In order to execute them, install NodeJS 15, clone this repository and run an example (e.g. connect.js)::
+The examples are provided for this documentation in the `examples folder <https://github.com/UniqueNetwork/unique-docs/tree/master/examples/>`_. In order to execute them, install NodeJS 15, clone this repository and run an example (e.g. connect.js)::
 
     cd examples
     npm install
@@ -25,7 +25,7 @@ The examples are provided for this documentation in the `examples folder <https:
 Opening Connection
 ------------------
 
-The Unique Network maintains public blockchain nodes to be used by clients for free. In order to connect to a client, you will need the public node URL and runtime types file that is located at https://github.com/usetech-llc/nft_parachain/runtime_types.json.
+The Unique Network maintains public blockchain nodes to be used by clients for free. In order to connect to a client, you will need the public node URL and runtime types file that is located at https://github.com/UniqueNetwork/nft_parachain/runtime_types.json.
 
 The public node URL depends on the network that you would like to connect to:
 
@@ -165,7 +165,7 @@ This method creates a Collection of NFTs. Each Token may have multiple propertie
 
     await api.tx.nft.createCollection();
 
-More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
+More complete examples can be found here: https://github.com/UniqueNetwork/unique-docs/blob/master/examples/token_management.js
 
 changeCollectionOwner
 ^^^^^^^^^^^^^^^^^^^^^
@@ -459,7 +459,7 @@ This method creates a concrete instance of NFT, Fungible, or ReFungible Collecti
     );
 
 
-More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
+More complete examples can be found here: https://github.com/UniqueNetwork/unique-docs/blob/master/examples/token_management.js
 
 createMultipleItems
 ^^^^^^^^^^^^^^^^^^^
@@ -537,7 +537,7 @@ This method destroys a concrete instance of NFT.
 
     await burnItem(api, alice, nftCollectionId, nftItemId, 1);
 
-More complete examples can be found here: https://github.com/usetech-llc/unique-docs/blob/master/examples/token_management.js
+More complete examples can be found here: https://github.com/UniqueNetwork/unique-docs/blob/master/examples/token_management.js
 
 Getting Token Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -892,7 +892,7 @@ Example of data returned from metadata endpoint for token ID 1::
         "image" : "https://ipfs-gateway.usetech.com/ipns/QmaMtDqE9nhMX9RQLTpaCboqg7bqkb6Gi67iCKMe8NDpCE/images/punks/image1.png"
     }
 
-This `protobuf example <https://github.com/usetech-llc/unique-docs/tree/master/examples/protobuf.js>`_ shows how to decode the substrapunk schema using JavaScript.
+This `protobuf example <https://github.com/UniqueNetwork/unique-docs/tree/master/examples/protobuf.js>`_ shows how to decode the substrapunk schema using JavaScript.
 
 **Permissions**
 
