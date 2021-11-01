@@ -1,9 +1,9 @@
 const { ApiPromise, WsProvider } = require('@polkadot/api');
-const { encodeAddress } = require('@polkadot/util-crypto');
 const config = require('./config');
 const fs = require('fs');
 const {deserializeNft} = require('./protobuf.js');
 const got = require('got');
+const path = require('path');
 
 let api;
 
@@ -44,7 +44,7 @@ function hexToUTF16(hex) {
 async function connect() {
   // Initialise the provider to connect to the node
   const wsProvider = new WsProvider(config.wsEndpoint);
-  const rtt = JSON.parse(fs.readFileSync("./runtime_types.json"));
+  const rtt = JSON.parse(fs.readFileSync(path.resolve(__dirname, "runtime_types.json")));
 
   // Create the API and wait until ready
   api = await ApiPromise.create({ 
@@ -116,20 +116,17 @@ async function getNftData(collectionId, tokenId, locale = "en") {
  * 
  */
 async function getNftMarketData(collectionId, tokenId) {
-  const offersResponse = await got(`https://api.unqnft.io/offers?collectionId=${collectionId}&searchText=${tokenId}`);
+  const offersResponse = await got(`https://api.unique.network/offers?collectionId=${collectionId}&searchText=${tokenId}`);
   const offers = JSON.parse(offersResponse.body);
 
   let marketData = null;
   if (offers.itemsCount > 0) {
     for (let i=0; i<offers.items.length; i++) {
       if (offers.items[i].tokenId == tokenId) {
-        const sellerPublicKey = Buffer.from(offers.items[i].seller, 'base64');
-        const sellerAddress = encodeAddress(sellerPublicKey);
-
         marketData = {
           price: offers.items[i].price,
           quote: 'KSM',
-          seller: sellerAddress
+          seller: offers.items[i].seller
         }
       }
     }
